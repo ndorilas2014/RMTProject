@@ -91,6 +91,7 @@ MuF<-function(S,N,X)
   return(-(S*N)/(SY)) #mu
 }
 
+#HELP
 #HypergeometricPFQ function
 hypergeo3F2 <- function(x){
   
@@ -112,7 +113,7 @@ hypergeo3F2 <- function(x){
   
 }
 
-
+#NEEDS WORK
 #return functions for optimizing d and sigma
 Opfunct<-function(x, params)
 {
@@ -175,11 +176,11 @@ Opfunct<-function(x, params)
 
 ##TESTING
 
-
+#NEEDS WORK
 #function for computing the logDeterminant of A
-logDetA<-function(mu,d,sigma, S)
+DetA<-function(mu,d,sigma,S)
 {
-  I=(pi/2 - (sigma/8)((hypergeo3F2(c(d,sigma))*4*sigma^2)/d^2 - 8*log(d/(2*sigma))))
+  I=pi/2 - (sigma/8)*((hypergeo3F2((4*sigma^2)/d^2) - 8*log(d/(2*sigma))))
   return(log(mu)+(S-1)*I)
 }
 
