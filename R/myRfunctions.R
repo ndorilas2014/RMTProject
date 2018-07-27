@@ -100,6 +100,9 @@ hypergeo3F2 <- function(x){
   oldldx <- 0
   ldx <- 1
   dx <- 1
+  if(x==0){
+    return(1)
+  }else{
   while( dx / s > 0.0001 ){
     ldx <- lgamma(1.5+k) + log(4) - log(1+k) - 0.5*log(pi) -
       lgamma(3+k) + k * log(x)
@@ -107,6 +110,7 @@ hypergeo3F2 <- function(x){
     s <- s + dx
     oldldx <- ldx
     k <- k + 1
+  }
   }
   
   return(s)

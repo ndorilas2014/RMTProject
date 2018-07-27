@@ -1,8 +1,8 @@
 source("RMTProject/R/myRfunctions.R")
 
 #Information about interaction matrix and time series data
-mu=seq(0.2,2,by=0.2)
-sigma=seq(0.1,1, by =0.1)
+mu=seq(-2,2,by=0.2)
+sigma=seq(0,1, by =0.1)
 d=seq(5, 10, by=0.25)
 S=60
 N=1000 
@@ -19,17 +19,17 @@ params2=expand.grid(sigma,mu,d)
 #different combinations of d, mu, sigma (d->mu->digma)
 params3=expand.grid(d,mu,sigma)
 
-k=length(mu)
-seq1=seq(1,length(mu),by=1) #length of ld
-ld=numeric(length(seq1)) #empty vector to store logDeterminant
+k=21
+seq1=seq(1,length(mu)*length(sigma)*length(d),by=1) #length of ld
+ld=numeric(k) #empty vector to store logDeterminant
 #creating A from different mu,sigma, d
-for(i in seq1)
+for(i in seq1[232:252])
 {
-  A=makeASymmetric(mu=params[i,1], sigma=params[i,2], d=params[i,3], S=S)
+#  A=makeASymmetric(mu=params[i,1], sigma=params[i,2], d=params[i,3], S=S)
 #  A=makeASymmetric(mu=params2[i,2], sigma=params2[i,1], d=params2[i,3], S=S)
-#  A=makeASymmetric(mu=params3[i,2], sigma=params3[i,3], d=params3[i,1], S=S)
+  A=makeASymmetric(mu=params3[i,2], sigma=params3[i,3], d=params3[i,1], S=S)
   
-  ld[i]=log(det(A))
+  ld[i-231]=log(det(A))
   print(i)
 }
 
@@ -43,9 +43,14 @@ dev.off()
 
 #Saving values of logDetA to Data folder
 
-#write.csv(ld, file="logDetA for varying mu, fixed sigma,d(simulated).txt")
-#write.csv(ld, file="logDetA for varying sigma, fixed mu,d(simulated).txt")
-#write.csv(ld, file="logDetA for varying d, fixed mu,sigma(simulated).txt")
+#W1=cbind(ld,params)# log determinants and paramater values mu->sigma->d
+#write.csv(W1, file="RMTProject/Data/logDeterminants of A/logDetA mu_sigma_d(simulated).txt")
+
+#W2=cbind(ld,params2)# log determinat and parameter values sigma->mu->d
+#write.csv(W2, file="RMTProject/Data/logDeterminants of A/logDetA sigma_mu_d(simulated).txt")
+
+#W3=cbind(ld,params3)#log determinant and paramter values d->mu->sigma
+#write.csv(W3, file="RMTProject/Data/logDeterminants of A/logDetA d_mu_sigma(simulated).txt")
 
 
 
@@ -53,14 +58,16 @@ dev.off()
 ################################################################
 #Computing the logDetA (analytically) for different mu,sigma, d
 ################################################################
-
-ld2=numeric(length(seq1))#create empty vector
+k=21
+ld2=numeric(k)#create empty vector
 
 #solving the analytical solution for log Det A for differerent mu,sigma, d
-for (i in seq1)
+for (i in seq1[232:252])
 {
-  ld2[i]=DetA(mu=(params[i,1]), sigma=(params[i,2]), d=(params[i,3]), S=S)
+
+  ld2[i-231]=DetA(mu=(params3[i,2]), sigma=(params3[i,3]), d=(params3[i,1]), S=S)
   print(i)
+ 
 }
 #Saving Plot
 jpeg("RMTProject/Data/Plots/The log Determinant of A for different d(computed analytically).jpeg")
@@ -82,6 +89,13 @@ dev.off()
 jpeg("RMTProject/Data/Plots/Simulated log(DetA) vs. Analytically Computed log(DetA) (d).jpeg")
 #ploting logDetA(simulated vs. computed)
 plot(ld,ld2, col="purple", xlab="logDetA computed w/simulations", ylab="logDetA computed analytically", 
-     title(main="Simulated log(DetA) vs. Analytically Computed log(DetA) (mu->0.2:2)"))
+     title(main="log(DetA) (sigma=0,d->5:10,mu=0.2)"))
 dev.off()
+
+
+
+
+
+
+
 
