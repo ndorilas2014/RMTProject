@@ -33,19 +33,19 @@ for(i in seq1)
   print(i)
 }
 
+#Save plots
+jpeg("RMTProject/Data/Plots/The log Determinant of A for different d(simulated).jpeg")
 #plotting the logDeterminants of the different A's
-plot(x=seq1, ld, col="blue",xlab="combinatioins of mu, sigma,d",ylab="logDetA", 
-     title(main="The log Determinant of A for different mu, sigma, d(computed w/simulations"))
-
-avg=mean(ld)#computing the mean of the logDetA
-variance=var(ld)#computing variance of the logDetA
+plot(x=mu, ld, col="blue",xlab="mu->0.2:2",ylab="logDetA", 
+     title(main="The log Determinant of A for different mu(computed w/simulations)"))
+dev.off()
 
 
 #Saving values of logDetA to Data folder
 
-#write.csv(ld, file="logDetA for varying mu, fixed sigma,d.txt")
-#write.csv(ld, file="logDetA for varying sigma, fixed mu,d.txt")
-#write.csv(ld, file="logDetA for varying d, fixed mu,sigma.txt")
+#write.csv(ld, file="logDetA for varying mu, fixed sigma,d(simulated).txt")
+#write.csv(ld, file="logDetA for varying sigma, fixed mu,d(simulated).txt")
+#write.csv(ld, file="logDetA for varying d, fixed mu,sigma(simulated).txt")
 
 
 
@@ -62,13 +62,26 @@ for (i in seq1)
   ld2[i]=DetA(mu=(params[i,1]), sigma=(params[i,2]), d=(params[i,3]), S=S)
   print(i)
 }
-
+#Saving Plot
+jpeg("RMTProject/Data/Plots/The log Determinant of A for different d(computed analytically).jpeg")
 #plotting logDet A
-plot(x=seq1, ld2, col="red",xlab="combinatioins of mu, sigma,d",ylab="logDetA",
-     title(main="The log Determinant of A for different mu, sigma, d(computed analytically)"))
-
-avg2=mean(ld2)#computing the mean of the logDetA
-variance2=var(ld2)
+plot(x=d, ld2, col="red",xlab="mu->0.2:2",ylab="logDetA",
+     title(main="The log Determinant of A for different d(computed analytically)"))
+dev.off()
 
 
+
+
+
+
+#####################################################################
+#Simulated logDetA vs Analytically Computed logDetA
+#####################################################################
+
+#Saving Plot
+jpeg("RMTProject/Data/Plots/Simulated log(DetA) vs. Analytically Computed log(DetA) (d).jpeg")
+#ploting logDetA(simulated vs. computed)
+plot(ld,ld2, col="purple", xlab="logDetA computed w/simulations", ylab="logDetA computed analytically", 
+     title(main="Simulated log(DetA) vs. Analytically Computed log(DetA) (mu->0.2:2)"))
+dev.off()
 
