@@ -8,11 +8,15 @@ Folders:
 
 1). R-contains all function definitions
 
-    1a). myRfunctions.R-population model, partial derivative functions, optimizations functions, error messages, etc.
+    1a). myRfunctions.R-population model, partial derivative functions, optimizations functions, error messages, hypergeometric function        
   
 2). Data-contains all data
 
     2a). A&X_data.R
+    
+    2b). Plots-plots for the log seterminants of A, computed through simulations and analytically 
+    
+    2c). log Determinants of A-files containing logdeterminants of A with varying mu,sigma,d
   
 3). Analysis-contains code for analysis 
 
