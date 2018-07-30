@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+%\usepackage[scientific-notation=true]{siunitx}
+\usepackage{tabularx}
+\newcommand{\D}{\displaystyle}
+\begin{document}
+
+\title{Inferring Characteristics of Interaction Matrices in an Ecological Context{}}
+\author{Naika Dorilas}
+
+\maketitle
+
+\begin{abstract}
+In this paper, 
+\end{abstract}
+
+\section{Background}
+What is random matrix theory?\hfill\break
+Random Matrix Theory is a combination of statistics and traditional matrix theory. In this field, many tools from statitistics are used to describe matrices with random elements instead of relying on those individual elements. It allows us to generalize about certain characteristics of mtrices with similar statistical properties. Many problems in physical systems modeling and biological systems modeling involve matrices with random entries. \hfill\break
+Random Matrix Theory in Ecology\hfill\break
+-what is it useful for?\hfill\break
+Traditionally in Lotka-Volterra Models of population growht blah blah (get from biolgy book). \hfill\break
+\hfill\break Model \hfill\break \hfill\break
+Although, in ecological models of populaion growth across species we often include something called an interaction matrix. It describes the way that different species interact with each other and effect eachothers survivial whether it be positively, negatively or with no effect at all. This is an essential aspect of a species environment which plays a large role in its survival. The simplest model of populations size of the ith species in an ecosystem is given by,\hfill\break
+\hfill\break
+$y_i(t+1)=y(t) + A_ij\times y_i +\xi_i$
+\hfill\break
+Where $y_i(t)$ is the population of species i at time t, $\xi_i$ is random noise that might affect a species growth, and $A_ij$ is the matrix that describes the interactions between the species.
+
+An example interaction matrix is illustrated in Figure (blah)(notes from Andy).\hfill\break 
+\hfill\break figure \hfill\break \hfill\break
+Here we have a small ecosystem of just 2 species for simplicity. In this case the model for population size of species i can be expanded to,
+\hfill\break
+\hfill\break
+%\begin{equation}
+%\begin{cases}
+%\dfrac{dT}{dt}=-\beta V T\\\\
+%\dfrac{dI_1}{dt}=\beta V T- kI_1\\\\
+%\end{cases}
+%\end{equation}
+\hfill\break
+\hfill\break
+(Explain what would happen for a couple different values)\hfill\break
+-motivation?\hfill\break
+-relevant resuts from randommatrix theory?\hfill\break
+-graphs that illustrate results\hfill\break
+Punchline(what am I trying to porve/show; goal)
+
+\section{Methods}
+Deriving Likelihood\hfill\break
+Simulating Data\hfill\break
+Testing Likelihood\hfill\break
+-graphs\hfill\break
+\hfill\break
+\subsection{This is a subsection}
+Blah
+\hfill\break
+
+\hfill\break
+%\hfill\break
+%\hfill\break
+%\begin{figure}
+%\caption{Cool graphs}
+% \includegraphics[scale=0.25]{}
+% \includegraphics[scale=0.25]{}
+% \includegraphics[scale=0.25]{}
+% \includegraphics[scale=0.25]{}
+% \includegraphics[scale=0.25]{}
+% \includegraphics[scale=0.25]{}
+%\hfill\break
+%\end{figure}
+%\hfill\break
+%\hfill\break
+
+\section{Results}
+Predicted output parameters vs actual parameters(include graphs)\hfill\break
+Behavior of simulation ouputs\hfill\break
+\hfill\break
+%\begin{equation}
+%\begin{cases}
+%\dfrac{dT}{dt}=-\beta V T\\\\
+%\dfrac{dI_1}{dt}=\beta V T- kI_1\\\\
+%\dfrac{dI_2}{dt}= kI_1- \delta I_2\\\\
+%\dfrac{dV}{dt}=\pi I_2- c V\\\\
+%\end{cases}
+%\end{equation}
+%\hfill\break
+\hfill\break
+In this model,
+\hfill\break
+\begin{table}
+\caption{Cool Table} 
+\centering 
+\begin{tabular}{lll}
+\hline
+Variable  & Meaning &Unit\\ [0.5ex]
+\hline
+\\
+&  &  $\D\frac{\mbox{}}{}$ \\ [0.5ex]	
+&  &  $\D\frac{\mbox{}}{}$ \\ [0.5ex]
+& &$\D\frac{\mbox{}}{}$ \\[0.5ex]
+& &  $\D\frac{\mbox{}}{}$  \\ [0.5ex]
+
+\hline
+\end{tabular}
+\label{table:variables} 
+\end{table}
+\hfill\break
+
+
+
+
+
+\section{Discussion}
+In this paper,
+(basic summary of Methods and Results and contextualize them in terms of the background information)
+In further research, 
+(future directions)
+
+%%%%%%%%%%%
+%CITING
+%%%%%%%%%%%
+
+This is a cite \cite{one}
+
+\begin{thebibliography}{999}
+
+\bibitem{one} Gomero, B., \emph{ Latin Hypercube Sampling and Partial Rank Corelation Coefficient Analysis Applied to an Optimal Control Problem,} University of Knoxville Tennessee, .(2012) .
+
+
+\end{thebibliography}
+\end{document}

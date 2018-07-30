@@ -5,10 +5,10 @@
 #Data Analysis
 
 #Data for A and X
-source("Data/A&X_data.R")
+source("RMTProject/Data/A&X_data.R")
 
 #Functions
-source("R/myRfunctions.R")
+source("RMTProject/R/myRfunctions.R")
 
 A=makeA_BV(mu=mu, sigma=sigma, rhoB=rhoB, d=d, S=S)
 
