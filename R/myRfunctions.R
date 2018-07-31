@@ -185,11 +185,9 @@ Opfunct<-function(x, params)
 DetA<-function(mu,d,sigma,S)
 {
   I=pi/2 - (sigma/8)*((hypergeo3F2((4*sigma^2)/d^2) - 8*log(d/(2*sigma))))
-  if(mu==0){
-    return((S-1)*I)
-  }else{
-  return(log(mu)+(S-1)*I)
-  }
+  I=log(d)-(sigma^2)/(2*d^2)*(hypergeo3F2((4*sigma^2)/d^2))
+  return((1/S)*log(d+mu)+((S-1)/S)*I)
+  
 }
 
 
@@ -278,7 +276,7 @@ makeASymmetric<-function(mu, sigma, d, S)
     A[i,i]=d 
   }
   
-  #A=A/sqrt(S)#resizing S
+  #A=A/sqrt(S)#resizing 
   
   return(A)
 }
