@@ -27,8 +27,9 @@ Although, if we want to include the effects of other species on a single species
 $y_i(t+1)=y(t) + \Delta t(A_ij\times y_i +\xi_i)$
 \hfill\break
 where $y_i(t)$ is the population of species i at time t, $\xi_i$ is random noise that might affect a species growth, and $A_ij$ is the matrix that describes the interactions between the species.
+\hfill\break 
+An example interaction matrix is illustrated in Figure (blah)(notes from Andy and page 166 ). 
 
-An example interaction matrix is illustrated in Figure (blah)(notes from Andy & page 166 ).\hfill\break 
 \hfill\break figure \hfill\break \hfill\break
 Here we have a small ecosystem of just 2 species for simplicity. In this case the model for population size of species i can be expanded to, 
 \hfill\break
@@ -43,14 +44,23 @@ Here we have a small ecosystem of just 2 species for simplicity. In this case th
 \hfill\break
 (Explain what would happen for a couple different values)\hfill\break
 -motivation?\hfill\break
+In biological systems many aspects of the environment and growth process are random, large and can vary over space and time. On top of that, the stability of a biological system is very pertinent, in an ecological context it determines the survival of species. Generally we look at the "community matrix", which for a population of S species includes S equations for population growth. The community matrix looks at equilibrium solutions for these equations in small perturbations around the equilibria. We say it is stable if when starting close to an equilibrium we stay close to that equilibria. Local stability can be determined by the eigenvalues of the is matrix M.  For higher dimensions, there is the exact entries of the matrix matter less than certain aspects about the distribution of their entries such as the mean, variance and diagonal elements. Random Matrix Theory allows us to understand the stability of an ecosystem through looking at large scale properties of the matrix A. The .....
 -relevant resuts from randommatrix theory?\hfill\break
+-Maximum likeihood
 -graphs that illustrate results\hfill\break
-Punchline(what am I trying to porve/show; goal)
+Punchline(what am I trying to prove/show; goal)\hfill\break
+In this project we start with a stable symmetrical matrix for which there are many useful properties from Random Matrix Theory. Given a set of data and our population model (1), our goal was to infer paramaters:mean-mu, variance-sigma, diagonal elements-d of our interaction matrix A. What this means is that based on an arbitrary real world data set of populations of different species across time, we hoped to infer how the species in that data set interact with eachother. 
+
+
 
 \section{Methods}
 Deriving Likelihood\hfill\break
+-We want to look at $P(x_i^a|\mu,\sigma, d)$ the probability of observing the data given $\mu,\sigma,d$.
+-We do this by ... \hfill\break
 Simulating Data\hfill\break
+-To ensure that our calculations were correct and that the method for out parameter were valid we generated data from $P(x_i^a| A)=\dfrac{\sqrt{det(A)}^{N/2}}{2\pi^{NS/2}}$ \hfill\break
 Testing Likelihood\hfill\break
+-To test the likelihood we looked at the 
 -graphs\hfill\break
 \hfill\break
 \subsection{This is a subsection}

@@ -2,6 +2,7 @@
 library(matlib)
 library(MASS)
 library(mvtnorm)
+library(rootSolve)
 
 
 ##Functions
@@ -26,7 +27,7 @@ TS<-function(A, dt, y, xi, i,j)
 ##Partial Derivative Functions
 
 #Returns the partial derivative of logP w.r.t mu 
-pDm<-function(S, N, X, Dm)
+rhsmu<-function(S, N, X)
 {
   sy=numeric(N) #creates empty vector of size N to store the squared sums of columns
   #stores the sum of all columns of X, then squares it
@@ -36,39 +37,66 @@ pDm<-function(S, N, X, Dm)
   }
   SY=sum(sy) #sum of the sums
   
-  return (Dm+(SY/(S*N))) #pLogP wrt mu
+  return ((SY/(S*N))) #pLogP wrt mu
+}
+
+pDm<-function(mu,d)
+{
+  return(1/(d+mu))
 }
 
 #Returns the parial derivative of logP w.r.t d
-pDd<-function(N, X, Dd)
+rhsD<-function(S, N, X)
 {
   sy=numeric(N) #creates empty vector of size N
   #stores the sum of all columns of X, then squares it
   for (a in 1:N)
   {
-    sy[a]=(sum((X[,a])^2))
+    sy[a]=sum((X[,a])^2)
   }
   SY=sum(sy) # sum of the sums
   
-  return (Dd-(SY/N)) #pLogP wrt d
-}
-
-#Returns the partial derivative of logP w.r.t sigma
-pDsigma<-function(S, N, X, Dsigma)
-{
-  ab=expand.grid(1:N, 1:N) #creates data frame#one row for each combination of a,b, 1-N
-  foo=numeric(nrow(ab)) # creates empty vector of length number of rows in ab
-  #foo stores the matrix multiplication of sum_i(sum_ab(X[,a])(X[,b]))
-  for(i in (1:nrow(ab)))
+  sy2=numeric(N) #creates empty vector of size N
+  #stores the sum of all columns of X, then squares it
+  for (a in 1:N)
   {
-    foo[i]=((X[,ab[i,1]])%*%(X[,ab[i,2]]))^2 #multiplies all combinations of x[,a] and x[,b]
+    sy2[a]=(sum(X[,a]))^2
   }
-  SY=sum(foo)#stores the sum of this new vector
+  SY2=sum(sy2) # sum of the sums
   
-  return (Dsigma+(SY/(S*N*2))) #pLogp wrt sigma
+  return ((-SY2/S^2/N)+(SY/(S*N))) 
+}
+
+pDetD<-function(sigma,d)
+{
+  x=sigma^2/d^2
+  f=1/(1+sqrt(1-4*x)-2*x)
+  
+  return((1/d)+(2*sigma^2/d^3)*f)
+}
+
+#Returns the rhs of partial derivative of logP w.r.t sigma
+rhssigma<-function(S, N, X)
+{
+  # ab=expand.grid(1:N, 1:N) #creates data frame#one row for each combination of a,b, 1-N
+  # foo=numeric(nrow(ab)) # creates empty vector of length number of rows in ab
+  # #foo stores the matrix multiplication of sum_i(sum_ab(X[,a])(X[,b]))
+  # for(i in (1:nrow(ab)))
+  # {
+  #   foo[i]=((X[,ab[i,1]])%*%(X[,ab[i,2]]))^2 #multiplies all combinations of x[,a] and x[,b]
+  # }
+  # SY=sum(foo)#stores the sum of this new vector
+  # 
+  # return ((SY/(S*N*2)/S/1+N/S)) #rhs pLogp wrt sigma
+  return(sum((X %*% t(X))^2 ) /(2*S*N) / S /(1+N/S))
 }
 
 
+pDetS<-function(sigma,d)
+{
+  b=sigma^2/d^2
+  return(1./(d^2) /( 1+ sqrt(1-4*b)-2*b ))
+}
 
 
 
@@ -129,8 +157,8 @@ Opfunct<-function(x, params)
   N=params[2]
   X=params[3]
 
-  #H=hypergeo3F2((4*x[1]^2)/(x[2]^2)) #HEEEEEEEEELLLPP
-  H=1
+  H=hypergeo3F2((4*x[1]^2)/(x[2]^2)) #HEEEEEEEEELLLPP
+  #H=1
 
   #creating RHS of dlogP wrt d
   sy1=numeric(N) #creates empty vector of size N
@@ -156,6 +184,8 @@ Opfunct<-function(x, params)
     foo[i]=((X[,ab[i,1]])%*%(X[,ab[i,2]]))^2 #multiplies all combinations of x[,a] and x[,b]
   }
   SY2=sum(foo)#stores the sum of this new vector
+  
+  
 
   #derivative from mathematica
   LHSsigma= (1/8)*pi*x[1]*(-(8/x[1])+8*x[1]*((x[2]^2)*(-(x[2]^2)+2*(x[1]^2)+(x[2]^2)*sqrt(((x[2]^2)
