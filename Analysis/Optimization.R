@@ -6,12 +6,12 @@ d=5
 S=50
 N=100
 
-dlist=seq(3,10, by=0.25)
+dlist=seq(4,10, by=0.25)
 mulist=seq(-3,3, by=0.25)
 siglist=seq(0,1.5,by=0.1)
 
 params=expand.grid(mulist,siglist,dlist)
-k=50
+k=nrow(params)
 r=numeric(k)
 l=r
 r2=r
@@ -21,10 +21,12 @@ l3=l
 
 for (i in 1:k)
 {
+
+    A=makeASymmetric(mu=params[i,1],sigma=params[i,2],d=params[i,3],S=S)#createA
+    
   if(errorPD(A)==1){
     print("A is not positive definite")
   }else{
-    A=makeASymmetric(mu=params[i,1],sigma=params[i,2],d=params[i,3],S=S)#createA
     X=makeX(mu=params[i,1],S=S,N=N,A=A)#createX
     
     r[i]=rhsD(S=S,N=N,X=X)#rhs for D in plogP wrt D
@@ -39,6 +41,26 @@ for (i in 1:k)
     print(i)
   }
 }
+
+write.csv(c(r,l), "RMTProject/Data/Optimization/rhs vs lhs in plogP wrt d.txt")
+write.csv(c(r2,l2), "RMTProject/Data/Optimization/rhs vs lhs in plogP wrt mu.txt")
+write.csv(c(r3,l3), "RMTProject/Data/Optimization/rhs vs lhs in plogP wrt sigma.txt")
+
+
+#############################
+#Plots
+##########
+
+#d
+plot(r,l, xlab="rhs in optimization for d", ylab="lhs in optimization for d", col="blue",
+     title(main="Rhs vs Lhs in optimization of P wrt d"))
+#mu
+plot(r2,l2, xlab="rhs in optimization for mu", ylab="lhs in optimization for mu", col="blue",
+     title(main="Rhs vs Lhs in optimization of P wrt d"))
+#sigma
+plot(r3,l3, xlab="rhs in optimization for sigma", ylab="lhs in optimization for sigma", 
+     col="blue",title(main="Rhs vs Lhs in optimization of P wrt d"))
+
 
 A=makeASymmetric(mu=mu,sigma=sigma,d=d,S=S)#createA
 

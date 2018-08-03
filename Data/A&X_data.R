@@ -5,7 +5,7 @@ mu=-1 #mean
 sigma=0.5 #deviation
 rhoB=-0.5 #correlation
 d=10 #diagonal elements
-N=10 #number of data points per species
+N=100 #number of data points per species
 
 
 #Eg=eigen(A)

@@ -106,18 +106,18 @@ y2=read.csv("RMTProject/Data/logDeterminants of A/logDetA sigma_mu_d(analytical)
 y3=read.csv("RMTProject/Data/logDeterminants of A/logDetA d_mu_sigma(analytical).txt")
 
 
-xval=x1[,2] #x axis (simulated logDeterminants) mu->-2:2, sigma=0, d=5
-yval=y1[,2] #y axis (analytical logDeterminants) mu->-2:2 sigma=0, d=5
+xval=x1[,2] #x axis (simulated logDeterminants) 
+yval=y1[,2] #y axis (analytical logDeterminants) 
 
-xval=x2[,2]#simulated mu=0, sigma=0.1:1, d=5
-yval=y2[,2]#analytical mu=0, sigma=0.1:1, d=5
-
-xval=x3[,2]#simulated mu=0, sigma=0.1, d->5:10
-yval=y3[,2]#analytical mu=0, sigma=0.1, d->5:10
+# xval=x2[,2]#simulated mu=0, sigma=0.1:1, d=5
+# yval=y2[,2]#analytical mu=0, sigma=0.1:1, d=5
+# 
+# xval=x3[,2]#simulated mu=0, sigma=0.1, d->5:10
+# yval=y3[,2]#analytical mu=0, sigma=0.1, d->5:10
 
 plot(xval,yval, xlab="Simulated Value of The logDeterminants", 
      ylab="Analytical Value of The logDeterminants", col="purple",
-     title(main="Simulated log Determinants vs Analytical log Determinants(d->5:10)"))
+     title(main="Simulated log Determinants vs Analytical log Determinants"))
 #simulated vs. analytical value
 
 #####################################################################

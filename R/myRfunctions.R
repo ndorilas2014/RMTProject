@@ -26,7 +26,7 @@ TS<-function(A, dt, y, xi, i,j)
 
 ##Partial Derivative Functions
 
-#Returns the partial derivative of logP w.r.t mu 
+#Returns the partial derivative of the rhs logP w.r.t mu 
 rhsmu<-function(S, N, X)
 {
   sy=numeric(N) #creates empty vector of size N to store the squared sums of columns
@@ -40,12 +40,13 @@ rhsmu<-function(S, N, X)
   return ((SY/(S*N))) #pLogP wrt mu
 }
 
+#partial derivative of logDet wrt mu
 pDm<-function(mu,d)
 {
   return(1/(d+mu))
 }
 
-#Returns the parial derivative of logP w.r.t d
+#Returns the rhs of partial derivative of logP w.r.t d
 rhsD<-function(S, N, X)
 {
   sy=numeric(N) #creates empty vector of size N
@@ -67,6 +68,7 @@ rhsD<-function(S, N, X)
   return ((-SY2/S^2/N)+(SY/(S*N))) 
 }
 
+#partial of DetA wrt D
 pDetD<-function(sigma,d)
 {
   x=sigma^2/d^2
@@ -91,7 +93,7 @@ rhssigma<-function(S, N, X)
   return(sum((X %*% t(X))^2 ) /(2*S*N) / S /(1+N/S))
 }
 
-
+#partial detA wrt sigma
 pDetS<-function(sigma,d)
 {
   b=sigma^2/d^2
@@ -105,21 +107,20 @@ pDetS<-function(sigma,d)
 
 ##Optimized mu,sigma,d
 
-#Returns optimized mu
-MuF<-function(S,N,X)
-{
-  sy=numeric(N) #creates empty vector of size N to store the squared sums of columns
-  #stores the sum of all columns of X, then squares it
-  for (a in 1:N)
-  {
-    sy[a]=(sum(X[,a]))^2
-  }
-  SY=sum(sy) #sum of the sums
-  
-  return(-(S*N)/(SY)) #mu
-}
+# #Returns optimized mu
+# MuF<-function(S,N,X)
+# {
+#   sy=numeric(N) #creates empty vector of size N to store the squared sums of columns
+#   #stores the sum of all columns of X, then squares it
+#   for (a in 1:N)
+#   {
+#     sy[a]=(sum(X[,a]))^2
+#   }
+#   SY=sum(sy) #sum of the sums
+#   
+#   return(-(S*N)/(SY)) #mu
+# }
 
-#HELP
 #HypergeometricPFQ function
 hypergeo3F2 <- function(x){
   
@@ -210,7 +211,7 @@ Opfunct<-function(x, params)
 
 ##TESTING
 
-#NEEDS WORK
+
 #function for computing the logDeterminant of A
 DetA<-function(mu,d,sigma,S)
 {
@@ -343,7 +344,6 @@ errorND<-function(A)
   
   if(maxEg>=0)
   {
-    print("A is not negative definite")
     return(1)
   }else{
     return(0)
