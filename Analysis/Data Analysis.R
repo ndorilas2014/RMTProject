@@ -40,8 +40,7 @@ if(errorND(A)==1)
   
   matplot((c(1:T)),t(y),xlab="time(t)", ylab="population of species at time t", 
           main="Population of S Species vs. Time",lty=1, col=rainbow(S), type="l") #time series plot
-  
-  
+
   ################################
   ##STATISTICAL PROPERTIES OF Y
   ################################

@@ -153,12 +153,11 @@ Opfunct<-function(x, params)
 
   #sigma=x[1]
   #d=x[2]
-
   S=params[1]
   N=params[2]
   X=params[3]
 
-  H=hypergeo3F2((4*x[1]^2)/(x[2]^2)) #HEEEEEEEEELLLPP
+  H=hypergeo3F2((4*x[1]^2)/(x[2]^2)) 
   #H=1
 
   #creating RHS of dlogP wrt d
