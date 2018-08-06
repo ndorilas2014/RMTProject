@@ -16,50 +16,50 @@ r=numeric(k)
 l=r=l2=r2=l3=r3=l1=r1=l21=r21=l31=r31=r
 
 
-for (i in 1:k)
-{
-  
-  A=makeASymmetric(mu=params[i,1],sigma=params[i,2],d=params[i,3],S=S)#createA
-  
-  if(errorPD(A)==1){
-    print("A is not positive definite")
-  }else{
-    X=try(makeX(mu=params[i,1],S=S,N=N,A=A))#createX
-    if(class(X)=='try-error'){
-      r[i]=l[i]=r2[i]=l2[i]=r3[i]=l3[i]=NA
-    }else{
-      
-      r[i]=rhsD(S=S,N=N,X=X)#rhs for D in plogP wrt D
-      l[i]=pDetD(sigma=params[i,2],d=params[i,3])#plogDet wrt D
-      
-      r2[i]=rhsmu(S=S,N=N,X=X)# rhs for mu in plogP wrt mu
-      l2[i]=pDm(mu=params[i,1],d=params[i,3])#plogDet wrt mu
-      
-      r3[i]=rhssigma(S=S,N=N,X=X)
-      l3[i]=pDetS(sigma=params[i,2],d=params[i,3])
-    }
-    print(i)
-  }
-}
-
-write.csv(cbind(r1,l1), "RMTProject/Data/Optimization/rhs vs lhs in plogP wrt d2.txt")
-write.csv(cbind(r21,l21), "RMTProject/Data/Optimization/rhs vs lhs in plogP wrt mu2.txt")
-write.csv(cbind(r31,l31), "RMTProject/Data/Optimization/rhs vs lhs in plogP wrt sigma2.txt")
-
+# for (i in 1:k)
+# {
+#   
+#   A=makeASymmetric(mu=params[i,1],sigma=params[i,2],d=params[i,3],S=S)#createA
+#   
+#   if(errorPD(A)==1){
+#     print("A is not positive definite")
+#   }else{
+#     X=try(makeX(mu=params[i,1],S=S,N=N,A=A))#createX
+#     if(class(X)=='try-error'){
+#       r[i]=l[i]=r2[i]=l2[i]=r3[i]=l3[i]=NA
+#     }else{
+#       
+#       r[i]=rhsD(S=S,N=N,X=X)#rhs for D in plogP wrt D
+#       l[i]=pDetD(sigma=params[i,2],d=params[i,3])#plogDet wrt D
+#       
+#       r2[i]=rhsmu(S=S,N=N,X=X)# rhs for mu in plogP wrt mu
+#       l2[i]=pDm(mu=params[i,1],d=params[i,3])#plogDet wrt mu
+#       
+#       r3[i]=rhssigma(S=S,N=N,X=X)
+#       l3[i]=pDetS(sigma=params[i,2],d=params[i,3])
+#     }
+#     print(i)
+#   }
+# }
+# 
+# write.csv(cbind(r1,l1), "RMTProject/Data/Optimization/rhs vs lhs in plogP wrt d2.txt")
+# write.csv(cbind(r21,l21), "RMTProject/Data/Optimization/rhs vs lhs in plogP wrt mu2.txt")
+# write.csv(cbind(r31,l31), "RMTProject/Data/Optimization/rhs vs lhs in plogP wrt sigma2.txt")
+# 
 
 #############################
 #Plots
 ##########
 
-#d
-plot(r,l, xlab="rhs in optimization for d", ylab="lhs in optimization for d", col="blue",
-     title(main="Rhs vs Lhs in optimization of P wrt d"))
-#mu
-plot(r2,l2, xlab="rhs in optimization for mu", ylab="lhs in optimization for mu", col="blue",
-     title(main="Rhs vs Lhs in optimization of P wrt d"))
-#sigma
-plot(r3,l3, xlab="rhs in optimization for sigma", ylab="lhs in optimization for sigma", 
-     col="blue",title(main="Rhs vs Lhs in optimization of P wrt d"))
+# #d
+# plot(r,l, xlab="rhs in optimization for d", ylab="lhs in optimization for d", col="blue",
+#      title(main="Rhs vs Lhs in optimization of P wrt d"))
+# #mu
+# plot(r2,l2, xlab="rhs in optimization for mu", ylab="lhs in optimization for mu", col="blue",
+#      title(main="Rhs vs Lhs in optimization of P wrt d"))
+# #sigma
+# plot(r3,l3, xlab="rhs in optimization for sigma", ylab="lhs in optimization for sigma", 
+#      col="blue",title(main="Rhs vs Lhs in optimization of P wrt d"))
 
 
 ####################################################################################
