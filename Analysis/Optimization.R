@@ -107,6 +107,25 @@ sigma
 d
 mu
 
+# verifiy optimization in `sol2`
+
+n <- 20
+
+params <- expand.grid(seq(sigma - 5, sigma + 5, length.out = n), 
+                      seq(d - 5, d + 5, length.out = n), 
+                      seq(mu - 5, mu + 5, length.out = n))
+params <- as.matrix(params)
+
+foo <- sapply(1:nrow(params), function(i) {
+    Opfunct(c(params[i, ], mu), S, N, X)
+})
+
+
+plot(params[, 2], foo[3, ])
+abline(h = 0)
+abline(v = sol2$x[2])
+
+
 
 #optimized mu,sigma, d
 sigma1=sol$root[1]
