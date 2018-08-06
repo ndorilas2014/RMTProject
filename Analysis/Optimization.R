@@ -86,7 +86,27 @@ pDetS(sigma=sigma,d=d)#plogDet wrt sigma
 
 #############################################
 #solve for mu,sigma,d
-sol=multiroot(f=Opfunct, S=S, N=N, X=X ,start=c(0.5, 4,0))
+sol=multiroot(f=Opfunct, S=S, N=N, X=X ,start=c(log(sigma), log(d), mu))
+
+
+# solving using a different function from a different package that seems to work better for us
+sol2 = nleqslv::nleqslv(c(log(sigma), log(d), mu), Opfunct, S = S, N = N, X = X, 
+                        control = list(maxit = 300, allowSingular = TRUE))
+
+# estimated sigma
+exp(sol2$x[1])
+
+# estimated d
+exp(sol2$x[2])
+
+# estimated mu
+sol2$x[3]
+
+# what we gave it
+sigma
+d
+mu
+
 
 #optimized mu,sigma, d
 sigma1=sol$root[1]
