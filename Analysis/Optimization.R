@@ -3,7 +3,7 @@ source("RMTProject/R/myRfunctions.R")
 mu=1
 sigma=0.5
 d=5
-S=100
+S=60
 N=100
 
 dlist=seq(4,10, by=0.25)
@@ -62,6 +62,8 @@ plot(r3,l3, xlab="rhs in optimization for sigma", ylab="lhs in optimization for 
      col="blue",title(main="Rhs vs Lhs in optimization of P wrt d"))
 
 
+####################################################################################
+
 A=makeASymmetric(mu=mu,sigma=sigma,d=d,S=S)#createA
 
 X=makeX(mu=mu,S=S,N=N,A=A)#createX
@@ -82,7 +84,16 @@ pDetD(sigma=sigma,d=d)#plogDet wrt D
 rhssigma(S=S,N=N,X=X)#rhs for sigma in pLogP wrt sigma
 pDetS(sigma=sigma,d=d)#plogDet wrt sigma
 
+#############################################
+#solve for mu,sigma,d
+sol=multiroot(f=Opfunct, S=S, N=N, X=X ,start=c(0.5, 4,0))
 
+#optimized mu,sigma, d
+sigma1=sol$root[1]
+d1=sol$root[2]
+mu1=sol$roots[3]
+
+################################################
 ##plot rhs/lhs vs min eg value =min(d-2sigma,d-mu)
 w=numeric(nrow(params))
 w2=w
@@ -114,9 +125,12 @@ for (i in 1:nrow(params))
   }
   print(i)
 }
-ep
-mu=params[376,1]
-d=params[376,3]
-sigma=params[376,2]
-params[376:377,]
+# ep
+# mu=params[376,1]
+# d=params[376,3]
+# sigma=params[376,2]
+# params[376:377,]
+
+
+#multiroot(f=model,S=S,N=N,X=X,start=c(0,1))
 

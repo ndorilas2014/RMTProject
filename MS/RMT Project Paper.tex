@@ -24,7 +24,7 @@ Traditionally in one-dimensional models of population growth, specifically lotka
 \hfill\break Model \hfill\break \hfill\break
 Although, if we want to include the effects of other species on a single species, in ecological models of population growth across species we often include something called an interaction matrix. It describes the way that different species interact with each other and effect eachothers survivial whether it be positively, negatively or with no effect at all. This is an essential aspect of a species environment which plays a large role in its survival. The simplest model of populations size of the ith species in an ecosystem is given by,\hfill\break
 \hfill\break 
-$y_i(t+1)=y(t) + \Delta t(A_ij\times y_i +\xi_i)$
+$y_i(t+1)=y(t) + \Delta t(A_{ij}\times y_i +\xi_i)$
 \hfill\break
 where $y_i(t)$ is the population of species i at time t, $\xi_i$ is random noise that might affect a species growth, and $A_ij$ is the matrix that describes the interactions between the species.
 \hfill\break 
@@ -44,7 +44,16 @@ Here we have a small ecosystem of just 2 species for simplicity. In this case th
 \hfill\break
 (Explain what would happen for a couple different values)\hfill\break
 -motivation?\hfill\break
-In biological systems many aspects of the environment and growth process are random, large and can vary over space and time. On top of that, the stability of a biological system is very pertinent, in an ecological context it determines the survival of species. Generally we look at the "community matrix", which for a population of S species includes S equations for population growth. The community matrix looks at equilibrium solutions for these equations in small perturbations around the equilibria. We say it is stable if when starting close to an equilibrium we stay close to that equilibria. Local stability can be determined by the eigenvalues of the is matrix M.  For higher dimensions, there is the exact entries of the matrix matter less than certain aspects about the distribution of their entries such as the mean, variance and diagonal elements. Random Matrix Theory allows us to understand the stability of an ecosystem through looking at large scale properties of the matrix A. The .....
+In biological systems many aspects of the environment and growth process are random, large and can vary over space and time. On top of that, the stability of a biological system is very pertinent, in an ecological context it determines the survival of species. Generally we look at the "community matrix", which for a population of S species includes S equations for population growth. The community matrix looks at equilibrium solutions for these equations in small perturbations around the equilibria. We say it is stable if when starting close to an equilibrium we stay close to that equilibria. Local stability can be determined by the eigenvalues of the is matrix M.  For higher dimensions, there is the exact entries of the matrix matter less than certain aspects about the distribution of their entries such as the mean, variance and diagonal elements. Random Matrix Theory allows us to understand the stability of an ecosystem through looking at large scale properties of the matrix A. We can determine when a system will be stable based on these properties\hfill\break
+\begin{bmatrix}
+   x_{11} & x_{12} & x_{13} & \dots &x_{1, 100}&\dots & x_{1n} \\
+    x_{21} & x_{22} & x_{23} & \dots &x_{2,100}&\dots & x_{2n} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots &\vdots&\vdots \\
+x_{100,1}&x_{100,2}&x_{100,3} &\dots & x_{100,100}&\dots& x_{100,n}\\ 
+\vdots & \vdots& \vdots& \vdots& \vdots &\ddots&\vdots \\
+    x_{n1} & x_{n2} & x_{n3} & \dots &x_{n,100}&\dots & x_{nn}
+\end{bmatrix}
+\hfill\break
 -relevant resuts from randommatrix theory?\hfill\break
 -Maximum likeihood
 -graphs that illustrate results\hfill\break

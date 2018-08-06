@@ -148,59 +148,20 @@ hypergeo3F2 <- function(x){
 
 #NEEDS WORK
 #return functions for optimizing d and sigma
-Opfunct<-function(x, params)
-{
-
-  #sigma=x[1]
-  #d=x[2]
-  S=params[1]
-  N=params[2]
-  X=params[3]
-
-  H=hypergeo3F2((4*x[1]^2)/(x[2]^2)) 
-  #H=1
-
-  #creating RHS of dlogP wrt d
-  sy1=numeric(N) #creates empty vector of size N
-  #stores the sum of all columns of X, then squares it
-  for (a in 1:N)
-  {
-    sy1[a]=(sum((X[,a])^2))
-  }
-  SY1=sum(sy1) # sum of the sums
-
-  #derivative from mathematica
-  LHSd=(1/8)*pi*x[1]*((8/x[2])-8*(x[1]^2)*((x[2]^2)*(-(x[2]^2)+2*(x[1]^2)+(x[2]^2)*sqrt(((x[2]^2)
-  -4*(x[1]^2))/(x[2]^2)))/(2*(x[1]^4))+H)/(x[2]^3)+(8*H/(x[2]^3)))
-
-  RHSd=(-1)*(SY1/N)
-
-  #creating RHS for dlogP wrt sigma
-  ab=expand.grid(1:N, 1:N) #creates data frame#one row for each combination of a,b, 1-N
-  foo=numeric(nrow(ab)) # creates empty vector of length number of rows in ab
-  #foo stores the matrix multiplication of sum_i(sum_ab(X[,a])(X[,b]))
-  for(i in (1:nrow(ab)))
-  {
-    foo[i]=((X[,ab[i,1]])%*%(X[,ab[i,2]]))^2 #multiplies all combinations of x[,a] and x[,b]
-  }
-  SY2=sum(foo)#stores the sum of this new vector
+Opfunct<-function(x, S, N, X) {
   
-  
-
-  #derivative from mathematica
-  LHSsigma= (1/8)*pi*x[1]*(-(8/x[1])+8*x[1]*((x[2]^2)*(-(x[2]^2)+2*(x[1]^2)+(x[2]^2)*sqrt(((x[2]^2)
-  -4*(x[1]^2))/(d^2)))/(2*(x[1]^4))+H)/(d^2)-(8*x[1]*H/(d^2)))
-  +(1/8)*pi*((-4*(x[1]^2)*H)/(x[2]^2)+8*log(x[2]/(2*x[1])))
-
-  RHSsigma=SY2/(S*N)
-
-  f[1]=LHSsigma+RHSsigma
-  f[2]=LHSd+RHSd
-
-  return(f)
-
+  x[1]=exp(x[1])
+  x[2]=exp(x[2])
+  #X=makeX(mu=x[3], S=S, N=N, A=makeASymmetric(mu=x[3],sigma=x[1],d=x[2], S=S))
+  return(c( F1=-rhssigma(S,N,X)+pDetS(sigma=x[1],d=x[2]),
+            F2=-rhsD(S,N,X)+pDetD(sigma=x[1],d=x[2]),
+            F3=-rhsmu(S,N,X)+pDm(mu=x[3],d=x[2])))
 }
 
+
+
+model <- function(x,S,N,X) c(F1=x[1]+x[2]-13, 
+                         F2=2*x[1]-3*x[2]+5)
 
 
 
@@ -219,8 +180,6 @@ DetA<-function(mu,d,sigma,S)
   return((1/S)*log(d+mu)+((S-1)/S)*I)
   
 }
-
-
 
 
 
