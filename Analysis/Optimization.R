@@ -74,7 +74,7 @@ X=makeX(mu=mu,S=S,N=N,A=A)#createX
 
 #mu
 rhsmu(S=S,N=N,X=X)#rhs for mu in plogP wrt mu
-pDm(mu=mu,d=d)#plogDet wrt mu
+pDm(mu=2,d=d)#plogDet wrt mu
 
 #d
 rhsD(S=S,N=N,X=X)#rhs for D in plogP wrt D
@@ -109,19 +109,19 @@ mu
 
 # verifiy optimization in `sol2`
 
-n <- 20
+n <- 10
 
-params <- expand.grid(seq(sigma - 5, sigma + 5, length.out = n), 
-                      seq(d - 5, d + 5, length.out = n), 
+params <- expand.grid(seq(log(sigma) - 5, log(sigma) + 5, length.out = n), 
+                      seq(log(d) - 5, log(d) + 5, length.out = n), 
                       seq(mu - 5, mu + 5, length.out = n))
 params <- as.matrix(params)
 
 foo <- sapply(1:nrow(params), function(i) {
-    Opfunct(c(params[i, ], mu), S, N, X)
+    Opfunct(params[i, ], S, N, X)
 })
 
 
-plot(params[, 2], foo[3, ])
+plot(params[, 3], foo[3, ])
 abline(h = 0)
 abline(v = sol2$x[2])
 
@@ -164,12 +164,42 @@ for (i in 1:nrow(params))
   }
   print(i)
 }
-# ep
-# mu=params[376,1]
-# d=params[376,3]
-# sigma=params[376,2]
-# params[376:377,]
 
 
-#multiroot(f=model,S=S,N=N,X=X,start=c(0,1))
+#generating combinations of mu,sigma, d
 
+
+sigma=seq(0.01,1.5,length.out=10)
+d=seq(4,10,length.out=10)
+mu=seq(-3,3,length.out=10)
+params=expand.grid(log(sigma),log(d), mu)
+params=as.matrix(params)
+
+
+
+#helper function to generate the data and run optimizatuin given vector of parameters p
+newfoo=function(p){
+  A=makeASymmetric(p[3],exp(p[1]),exp(p[2]),S)
+  X=makeX(p[3], S,N,A)
+  sol2 = nleqslv::nleqslv(c((p[1]), (p[2]), p[3]), Opfunct, 
+                              S = S, N = N, X = X, 
+                              control = list(maxit = 300, allowSingular = TRUE))
+  return(sol2$x)
+}
+predictedP <- sapply(1:nrow(params), function(i) {
+  print(i)
+  output=try(newfoo(params[i,]))
+
+  if(class(output)=="try-error"){
+    return(rep(NA,3))
+  }else{
+    return(output)
+  }
+ 
+  
+})
+
+plot(params[,2],predictedP[2,])
+
+###Plots for actual vs expected d
+###plots partial of likelihood wrt mu,sigma, d
