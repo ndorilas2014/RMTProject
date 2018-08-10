@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.16)  5 AUG 2018 12:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.16)  9 AUG 2018 22:41
 entering extended mode
 **"./RMT Project Paper.tex"
 ("RMT Project Paper.tex"
@@ -203,42 +203,406 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-Underfull \hbox (badness 10000) in paragraph at lines 19--32
+Underfull \hbox (badness 10000) in paragraph at lines 21--23
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 19--32
+Underfull \hbox (badness 10000) in paragraph at lines 24--26
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 19--32
+Underfull \hbox (badness 10000) in paragraph at lines 24--26
+
+ []
+
+[1
+
+{C:/Users/Naika/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 28--32
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--48
+Underfull \hbox (badness 10000) in paragraph at lines 28--32
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--48
+Underfull \hbox (badness 10000) in paragraph at lines 28--32
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--48
+Underfull \hbox (badness 10000) in paragraph at lines 51--56
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--48
+Underfull \hbox (badness 10000) in paragraph at lines 51--56
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--48
+Underfull \hbox (badness 10000) in paragraph at lines 51--56
 
  []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--70
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--70
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--70
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--70
+
+ []
+
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 82--86
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 82--86
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 82--86
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 98--101
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 98--101
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 98--101
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 102--104
+
+ []
+
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 118--121
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--124
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 133--135
+
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 142--146
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 142--146
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 148--157
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 148--157
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 148--157
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 148--157
+
+ []
+
+[5]
+<Picture2.jpg, id=30, 492.33937pt x 304.88907pt>
+File: Picture2.jpg Graphic file (type jpg)
+<use Picture2.jpg>
+Package pdftex.def Info: Picture2.jpg  used on input line 161. on input line 16
+1.
+Package pdftex.def Info: Requested size: 246.16907pt x 152.44415pt on input lin
+e 161.
+
+Underfull \hbox (badness 10000) in paragraph at lines 163--164
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 163--164
+
+ []
+
+[6 <./Picture2.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 173--176
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 173--176
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 178--188
+
+ []
+
+[7]
+<Popf.jpeg, id=38, 541.27219pt x 329.73187pt>
+File: Popf.jpeg Graphic file (type jpg)
+<use Popf.jpeg>
+Package pdftex.def Info: Popf.jpeg  used on input line 211. on input line 211.
+Package pdftex.def Info: Requested size: 324.76581pt x 197.84064pt on input lin
+e 211.
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--220
+
+ []
+
+[8 <./Popf.jpeg>]
+<LD.jpeg, id=42, 541.27219pt x 329.73187pt>
+File: LD.jpeg Graphic file (type jpg)
+<use LD.jpeg>
+Package pdftex.def Info: LD.jpeg  used on input line 227. on input line 227.
+Package pdftex.def Info: Requested size: 216.50504pt x 131.8904pt on input line
+ 227.
+<rlmu.jpeg, id=43, 541.27219pt x 329.73187pt>
+File: rlmu.jpeg Graphic file (type jpg)
+<use rlmu.jpeg>
+Package pdftex.def Info: rlmu.jpeg  used on input line 229. on input line 229.
+Package pdftex.def Info: Requested size: 216.50504pt x 131.8904pt on input line
+ 229.
+<rld.jpeg, id=44, 541.27219pt x 329.73187pt>
+File: rld.jpeg Graphic file (type jpg)
+<use rld.jpeg>
+Package pdftex.def Info: rld.jpeg  used on input line 230. on input line 230.
+Package pdftex.def Info: Requested size: 216.50504pt x 131.8904pt on input line
+ 230.
+<rlsigma.jpeg, id=45, 541.27219pt x 329.73187pt>
+File: rlsigma.jpeg Graphic file (type jpg)
+<use rlsigma.jpeg>
+Package pdftex.def Info: rlsigma.jpeg  used on input line 231. on input line 23
+1.
+Package pdftex.def Info: Requested size: 216.50504pt x 131.8904pt on input line
+ 231.
+<OPmu.jpeg, id=46, 541.27219pt x 329.73187pt>
+File: OPmu.jpeg Graphic file (type jpg)
+<use OPmu.jpeg>
+Package pdftex.def Info: OPmu.jpeg  used on input line 233. on input line 233.
+Package pdftex.def Info: Requested size: 216.50504pt x 131.8904pt on input line
+ 233.
+<OPsigma.jpeg, id=47, 541.27219pt x 329.73187pt>
+File: OPsigma.jpeg Graphic file (type jpg)
+<use OPsigma.jpeg>
+Package pdftex.def Info: OPsigma.jpeg  used on input line 234. on input line 23
+4.
+Package pdftex.def Info: Requested size: 216.50504pt x 131.8904pt on input line
+ 234.
+<OPd.jpeg, id=48, 541.27219pt x 329.73187pt>
+File: OPd.jpeg Graphic file (type jpg)
+<use OPd.jpeg>
+Package pdftex.def Info: OPd.jpeg  used on input line 235. on input line 235.
+Package pdftex.def Info: Requested size: 216.50504pt x 131.8904pt on input line
+ 235.
+
+Underfull \hbox (badness 10000) in paragraph at lines 222--236
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 222--236
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 222--236
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 222--236
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 222--236
+
+ []
+
+
+Overfull \hbox (90.23228pt too wide) in paragraph at lines 222--236
+[] []
+ []
+
+
+Overfull \hbox (90.23228pt too wide) in paragraph at lines 222--236
+[] []
+ []
+
+[9 <./LD.jpeg>]
+<Picture1.jpg, id=52, 565.02pt x 344.16692pt>
+File: Picture1.jpg Graphic file (type jpg)
+<use Picture1.jpg>
+Package pdftex.def Info: Picture1.jpg  used on input line 241. on input line 24
+1.
+Package pdftex.def Info: Requested size: 282.50931pt x 172.08304pt on input lin
+e 241.
+
+Underfull \hbox (badness 10000) in paragraph at lines 237--271
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 237--271
+
+ []
+
+[10 <./rlmu.jpeg> <./rld.jpeg> <./rlsigma.jpeg> <./OPmu.jpeg> <./OPsigma.jpeg> 
+<./OPd.jpeg>]
+Underfull \hbox (badness 10000) in paragraph at lines 279--280
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 284--285
+[]\OT1/cmr/m/n/10 Wigner's Semi-cir-cle Law. (n.d.). Re-trieved from
+ []
+
+[11 <./Picture1.jpg>] ("RMT Project Paper.aux") ) 
+Here is how much of TeX's memory you used:
+ 2202 strings out of 493312
+ 29411 string characters out of 3138899
+ 94938 words of memory out of 3000000
+ 5719 multiletter control sequences out of 15000+200000
+ 10468 words of font info for 38 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 41i,9n,25p,1383b,218s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmbx9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmm
+i10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Progra
+m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmsy10.pfb>
+Output written on "RMT Project Paper.pdf" (11 pages, 880160 bytes).
+PDF statistics:
+ 100 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

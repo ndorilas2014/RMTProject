@@ -16,50 +16,56 @@ r=numeric(k)
 l=r=l2=r2=l3=r3=l1=r1=l21=r21=l31=r31=r
 
 
-# for (i in 1:k)
-# {
-#   
-#   A=makeASymmetric(mu=params[i,1],sigma=params[i,2],d=params[i,3],S=S)#createA
-#   
-#   if(errorPD(A)==1){
-#     print("A is not positive definite")
-#   }else{
-#     X=try(makeX(mu=params[i,1],S=S,N=N,A=A))#createX
-#     if(class(X)=='try-error'){
-#       r[i]=l[i]=r2[i]=l2[i]=r3[i]=l3[i]=NA
-#     }else{
-#       
-#       r[i]=rhsD(S=S,N=N,X=X)#rhs for D in plogP wrt D
-#       l[i]=pDetD(sigma=params[i,2],d=params[i,3])#plogDet wrt D
-#       
-#       r2[i]=rhsmu(S=S,N=N,X=X)# rhs for mu in plogP wrt mu
-#       l2[i]=pDm(mu=params[i,1],d=params[i,3])#plogDet wrt mu
-#       
-#       r3[i]=rhssigma(S=S,N=N,X=X)
-#       l3[i]=pDetS(sigma=params[i,2],d=params[i,3])
-#     }
-#     print(i)
-#   }
-# }
-# 
+for (i in 1:k)
+{
+
+  A=makeASymmetric(mu=params[i,1],sigma=params[i,2],d=params[i,3],S=S)#createA
+
+  if(errorPD(A)==1){
+    print("A is not positive definite")
+  }else{
+    X=try(makeX(mu=params[i,1],S=S,N=N,A=A))#createX
+    if(class(X)=='try-error'){
+      r[i]=l[i]=r2[i]=l2[i]=r3[i]=l3[i]=NA
+    }else{
+
+      r[i]=rhsD(S=S,N=N,X=X)#rhs for D in plogP wrt D
+      l[i]=pDetD(sigma=params[i,2],d=params[i,3])#plogDet wrt D
+
+      r2[i]=rhsmu(S=S,N=N,X=X)# rhs for mu in plogP wrt mu
+      l2[i]=pDm(mu=params[i,1],d=params[i,3])#plogDet wrt mu
+
+      r3[i]=rhssigma(S=S,N=N,X=X)
+      l3[i]=pDetS(sigma=params[i,2],d=params[i,3])
+    }
+    print(i)
+  }
+}
+
 # write.csv(cbind(r1,l1), "RMTProject/Data/Optimization/rhs vs lhs in plogP wrt d2.txt")
 # write.csv(cbind(r21,l21), "RMTProject/Data/Optimization/rhs vs lhs in plogP wrt mu2.txt")
 # write.csv(cbind(r31,l31), "RMTProject/Data/Optimization/rhs vs lhs in plogP wrt sigma2.txt")
 # 
+
+# N1=read.csv("RMTProject/Data/Optimization/rhs vs lhs in plogP wrt d.txt")
+# N2=read.csv("RMTProject/Data/Optimization/rhs vs lhs in plogP wrt mu.txt")
+# N3=read.csv("RMTProject/Data/Optimization/rhs vs lhs in plogP wrt sigma.txt")
 
 #############################
 #Plots
 ##########
 
 # #d
-# plot(r,l, xlab="rhs in optimization for d", ylab="lhs in optimization for d", col="blue",
+# plot(N1[,2],N1[,3], xlab="rhs in optimization for d", ylab="lhs in optimization for d", col="blue",
 #      title(main="Rhs vs Lhs in optimization of P wrt d"))
+# 
 # #mu
-# plot(r2,l2, xlab="rhs in optimization for mu", ylab="lhs in optimization for mu", col="blue",
-#      title(main="Rhs vs Lhs in optimization of P wrt d"))
+# plot(N2[,2],N2[,3], xlab="rhs in optimization for mu", ylab="lhs in optimization for mu", col="blue",
+#      title(main="Rhs vs Lhs in optimization of P wrt mu"),xlim=c(0,5))
+# 
 # #sigma
-# plot(r3,l3, xlab="rhs in optimization for sigma", ylab="lhs in optimization for sigma", 
-#      col="blue",title(main="Rhs vs Lhs in optimization of P wrt d"))
+# plot(N3[,2],N3[,3], xlab="rhs in optimization for sigma", ylab="lhs in optimization for sigma",
+#      col="blue",title(main="Rhs vs Lhs in optimization of P wrt sigma"),xlim=c(0,0.15))
 
 
 ####################################################################################
@@ -85,7 +91,7 @@ rhssigma(S=S,N=N,X=X)#rhs for sigma in pLogP wrt sigma
 pDetS(sigma=sigma,d=d)#plogDet wrt sigma
 
 #############################################
-#solve for mu,sigma,d
+#solve for mu,sigma,d using multiroot
 sol=multiroot(f=Opfunct, S=S, N=N, X=X ,start=c(log(sigma), log(d), mu))
 
 
@@ -109,7 +115,7 @@ mu
 
 # verifiy optimization in `sol2`
 
-n <- 10
+n <- 25
 
 params <- expand.grid(seq(log(sigma) - 5, log(sigma) + 5, length.out = n), 
                       seq(log(d) - 5, log(d) + 5, length.out = n), 
@@ -120,12 +126,16 @@ foo <- sapply(1:nrow(params), function(i) {
     Opfunct(params[i, ], S, N, X)
 })
 
+##hERERER!!!
 
+plot(exp(params[, 1]), foo[1, ],col="blue", xlab="values of sigma", ylab="optimization ouput", title(main="Optimization function vs. Sigma"))
+ abline(h=0)
+###########
 plot(params[, 3], foo[3, ])
 abline(h = 0)
 abline(v = sol2$x[2])
 
-
+###
 
 #optimized mu,sigma, d
 sigma1=sol$root[1]
@@ -186,6 +196,7 @@ newfoo=function(p){
                               control = list(maxit = 300, allowSingular = TRUE))
   return(sol2$x)
 }
+#getting the predicted value of mu, sigma, d
 predictedP <- sapply(1:nrow(params), function(i) {
   print(i)
   output=try(newfoo(params[i,]))
@@ -199,7 +210,15 @@ predictedP <- sapply(1:nrow(params), function(i) {
   
 })
 
-plot(params[,2],predictedP[2,])
+#plotting actual vs predicted d
+plot(exp(params[,2]),exp(predictedP[2,]), xlab="actual value of d", 
+     ylab="predicted value of d", col="red", title(main="Predicted vs. Actual d"))
 
+
+foo3=matrix(numeric(nrow(params)),nrow=nrow(params),ncol=ncol(params))
 ###Plots for actual vs expected d
 ###plots partial of likelihood wrt mu,sigma, d
+for(i in 1:nrow(params)){
+foo3[i]=Opfunct(c(params[i,1],params[i,2],params[i,3]),S,N,X)
+}
+
