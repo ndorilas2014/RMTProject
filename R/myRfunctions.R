@@ -306,7 +306,18 @@ P_x<-function(X,A, log = TRUE)
     S=nrow(A)
     N=ncol(X)
     
+    #browser()
+    p1=(as.brob(det(A)^(N/2)))
+    p2=as.brob((2*pi)^(N*S/2))
+    p3=exp((-1/2)*sum(diag(t(X)%*%A%*%X)))
+    
+ 
+    p1_2=det(A)^as.brob(N/2)
+    p2_2=(2*pi)^as.brob(N*S/2)
+    p3_2=exp(as.brob((-1/2)*sum(diag(t(X)%*%A%*%X))))
+    
     P=((as.brob(det(A)^(N/2))) / as.brob((2*pi)^(N*S/2)) ) * exp((-1/2)*sum(diag(t(X)%*%A%*%X)))
+    
     # if(is.nan(log(P))){
     #     browser()
     # }
@@ -317,8 +328,12 @@ P_x<-function(X,A, log = TRUE)
     }
 }
 
-MonteCarlo<-function(X, mu, sigma, d, B)
+MonteCarlo<-function(x,X, B)
 {
+    mu=x[1]
+    sigma=x[2]
+    d=x[3]
+    
     sumB=0
     N=ncol(X)
     S=nrow(X)
