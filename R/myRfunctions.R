@@ -298,9 +298,30 @@ makeASymmetric<-function(mu, sigma, d, S)
   return(as.matrix(A))
 }
 
-P_x<-function(X,A,N)
+P_x<-function(X,A)
 {
-  ((sqrt(det(A)))^N)/((2*pi)^(N*S/2))*exp((-1/2)*sum(diag(t(X)%*%A%*%X)))
+    #using as.brob function to increace R tolerance of large numbers
+    S=nrow(A)
+    N=ncol(X)
+    
+    P=((det(A)^as.brob(N/2))/((2*pi)^as.brob(N*S/2)))*exp((-1/2)*sum(diag(t(X)%*%A%*%X)))
+    return(P)
+}
+
+MonteCarlo(X, mu, sigma, d, B)
+{
+    sumB=0
+    N=ncol(X)
+    S=nrow(X)
+    
+    A=makeASymmetric(mu, sigma, d, S=S)
+
+    for(i in 1:B)
+    {
+        sumB=sumB+P_x(X=X,A=A,N=N)
+    }
+    return(sumB/B)
+    
 }
 
 ##Error if A is not positive definite

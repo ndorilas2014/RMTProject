@@ -97,6 +97,18 @@ y2=makeX(mu=mu, S=S, N=N2, A=A)
 
 ```
 
+Now we need 3 functions. One to generate symmetric matrices A which is included in myRfunctions.R, one to create time seires data for which there are two options in myRfunctions.R, and one to calculate $P(X|A)=\dfrac{(detA)^{N/2}}{(2\pi)^{NS/2}} exp(-\dfrac{1}{2}\sum_{a=1}^{N}\sum_{ij}^S x_i^a A_{ij} x_j^a)$. We compute $\sum_{a=1}^{N}\sum_{ij}^S x_i^a A_{ij} x_j^a$ by finding $\sum_{i=j}X^TAX$ 
+   
+```{r eval=FALSE}
+ P_x<-function(X,A,N)
+ {
+   ((sqrt(det(A)))^N)/((2*pi)^(N*S/2))*exp((-1/2)*sum(diag(t(X)%*%A%*%X)))
+ }
+
+```
+
+
+
 #Maximum Likelihood
 
 ##Monte Carlo Integral
