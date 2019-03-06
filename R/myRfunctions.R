@@ -300,32 +300,19 @@ makeASymmetric<-function(mu, sigma, d, S)
   return(as.matrix(A))
 }
 
-P_x<-function(X,A, log = TRUE)
+P_x<-function(X, A)
 {
-    #using as.brob function to increace R tolerance of large numbers
+    # note: we're always returning the log of P(X|A)
+    
     S=nrow(A)
     N=ncol(X)
     
-    #browser()
-    p1=(as.brob(det(A)^(N/2)))
-    p2=as.brob((2*pi)^(N*S/2))
-    p3=exp((-1/2)*sum(diag(t(X)%*%A%*%X)))
+    logDA = determinant(A, logarithm = TRUE)
+    logDA = logDA$modulus * logDA$sign
     
- 
-    p1_2=det(A)^as.brob(N/2)
-    p2_2=(2*pi)^as.brob(N*S/2)
-    p3_2=exp(as.brob((-1/2)*sum(diag(t(X)%*%A%*%X))))
+    out <- N/2 * (logDA - S * log(2 * pi)) - 1/2 * sum(diag(t(X)%*%A%*%X))
     
-    P=((as.brob(det(A)^(N/2))) / as.brob((2*pi)^(N*S/2)) ) * exp((-1/2)*sum(diag(t(X)%*%A%*%X)))
-    
-    # if(is.nan(log(P))){
-    #     browser()
-    # }
-    if(log) {
-        return(log(P))
-    } else {
-        return(P)
-    }
+    return(as.numeric(out))
 }
 
 MonteCarlo<-function(x,X, B)
