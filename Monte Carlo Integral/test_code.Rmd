@@ -79,10 +79,10 @@ sigma=0.5 #deviation
 d=10 #diagonal elements
 N2=100 #number of data points per species
 
-A=makeASymmetric(mu=mu,sigma=sigma,d=-d, S=S)
+#A=makeASymmetric(mu=mu,sigma=sigma,d=-d, S=S)
 
 y2=matrix(0,nrow=S, ncol=N2) #population
-y2=makeX(mu=mu, S=S, N=N2, A=A)
+y2=makeX(mu=mu, sigma=sigma, d=d, S=S, N=N2)
 
 ```
 
@@ -100,10 +100,21 @@ y2=makeX(mu=mu, S=S, N=N2, A=A)
 Now we need 3 functions. One to generate symmetric matrices A which is included in myRfunctions.R, one to create time seires data for which there are two options in myRfunctions.R, and one to calculate $P(X|A)=\dfrac{(detA)^{N/2}}{(2\pi)^{NS/2}} exp(-\dfrac{1}{2}\sum_{a=1}^{N}\sum_{ij}^S x_i^a A_{ij} x_j^a)$. We compute $\sum_{a=1}^{N}\sum_{ij}^S x_i^a A_{ij} x_j^a$ by finding $\sum_{i=j}X^TAX$ 
    
 ```{r eval=FALSE}
- P_x<-function(X,A,N)
- {
-   ((sqrt(det(A)))^N)/((2*pi)^(N*S/2))*exp((-1/2)*sum(diag(t(X)%*%A%*%X)))
- }
+P_x<-function(X, A)
+{
+    # note: we're always returning the log of P(X|A)
+    
+    S=nrow(A)
+    N=ncol(X)
+    
+    #determinant returns a list of the absolute value of the determinat(modulus) and the        sign
+    logDA = determinant(A, logarithm = TRUE)
+    logDA = logDA$modulus * logDA$sign
+    
+    out <- N/2 * (logDA - S * log(2 * pi)) - 1/2 * sum(diag(t(X)%*%A%*%X))
+    
+    return(as.numeric(out))
+}
 
 ```
 
@@ -113,8 +124,25 @@ Now we need 3 functions. One to generate symmetric matrices A which is included 
 
 ##Monte Carlo Integral
 
-Given an SxN matrix of times series data X, our goal is to find the average probability, P(X|mu,sigma,d). 
+Given an SxN matrix of times series data X, our goal is to find the average probability, $P(X|\mu,\sigma,d)$. We use a function created to compute the Monte Carlo Integral, B times for 1 set of $\mu,\sigma,d$
 
+Then we optimize this for one set of $\mu, \sigma, d$ to see if it can infer parameters close to the actual parameters which were used to make the data
+```{r eval=FALSE}
+
+mu=1
+sigma=0.5
+d=10
+S=10
+N=10
+B=100
+
+X=makeX(mu,sigma,d,S,N)
+optim(par=c(mu,sigma,d),fn=MonteCarlo,X=X,B=B, method = 'L-BFGS-B', 
+      lower = c(-10, 0, 0), upper = c(10, 10, 100),
+      control = list(fnscale = -1))
+
+
+```
 First we create a matrix of a possible range of $\mu\in(-2,2)$, $\sigma\in(0,1)$ and $d\in(5,10)$ and then we generate time series data X and interaction matrix A based on this data 
 
 ```{r}
