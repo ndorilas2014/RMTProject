@@ -328,7 +328,7 @@ MonteCarlo<-function(x,X, B)
 
     L=lapply(1:B, function(i){
         A=makeASymmetric(mu, sigma, d, S=S)
-        return(P_x(X,A, log=TRUE))
+        return(P_x(X, A))
     })
     L=mean(unlist(L),na.rm=TRUE)
     #browser()
