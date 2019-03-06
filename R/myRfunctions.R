@@ -5,6 +5,7 @@ library(mvtnorm)
 library(rootSolve)
 library(cubature)
 library(Matrix)
+library(Brobdingnag)
 
 
 ##Functions
@@ -298,14 +299,19 @@ makeASymmetric<-function(mu, sigma, d, S)
   return(as.matrix(A))
 }
 
-P_x<-function(X,A)
+P_x<-function(X,A, log = TRUE)
 {
     #using as.brob function to increace R tolerance of large numbers
     S=nrow(A)
     N=ncol(X)
     
-    P=((det(A)^as.brob(N/2))/((2*pi)^as.brob(N*S/2)))*exp((-1/2)*sum(diag(t(X)%*%A%*%X)))
-    return(P)
+    P=((as.brob(det(A)^(N/2))) / as.brob((2*pi)^(N*S/2)) ) * exp((-1/2)*sum(diag(t(X)%*%A%*%X)))
+    
+    if(log) {
+        return(log(P))
+    } else {
+        return(P)
+    }
 }
 
 MonteCarlo(X, mu, sigma, d, B)
