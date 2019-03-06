@@ -236,10 +236,11 @@ DetA<-function(mu,d,sigma,S)
 
 ##Generating species data from P(x|A)=sqrt(detA)/((2*pi)^S/2) * exp((1/2)sum(xiAijxj))
 ##
-makeX<-function(mu, S, N, A)
+makeX<-function(mu, sigma, d, S, N)
 {
   # browser()
   mulist=rep(mu, S)#Generating means for X
+  A=makeASymmetric(mu,sigma,d,S)
   
   X=t(rmvnorm(N, (mulist/S), inv(A), method="svd")) #Generates X/data from a mv distribution
   #N=ncol(X) #for when X is given not created from mv distribution
@@ -306,7 +307,9 @@ P_x<-function(X,A, log = TRUE)
     N=ncol(X)
     
     P=((as.brob(det(A)^(N/2))) / as.brob((2*pi)^(N*S/2)) ) * exp((-1/2)*sum(diag(t(X)%*%A%*%X)))
-    
+    # if(is.nan(log(P))){
+    #     browser()
+    # }
     if(log) {
         return(log(P))
     } else {
@@ -314,19 +317,21 @@ P_x<-function(X,A, log = TRUE)
     }
 }
 
-MonteCarlo(X, mu, sigma, d, B)
+MonteCarlo<-function(X, mu, sigma, d, B)
 {
     sumB=0
     N=ncol(X)
     S=nrow(X)
     
-    A=makeASymmetric(mu, sigma, d, S=S)
 
-    for(i in 1:B)
-    {
-        sumB=sumB+P_x(X=X,A=A,N=N)
-    }
-    return(sumB/B)
+    L=lapply(1:B, function(i){
+        A=makeASymmetric(mu, sigma, d, S=S)
+        return(P_x(X,A, log=TRUE))
+    })
+    L=mean(unlist(L),na.rm=TRUE)
+    #browser()
+    
+    return(L)
     
 }
 
