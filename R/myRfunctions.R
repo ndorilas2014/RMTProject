@@ -337,6 +337,24 @@ MonteCarlo<-function(x,X, B)
     
 }
 
+RMToptimize<-function(X,niter=100)
+{
+    mu=1
+    sigma=0.5
+    d=10
+    S=nrow(X)
+    N=ncol(X)
+    B=niter
+    
+    #X=makeX(mu,sigma,d,S,N)
+    out<-optim(par=c(mu,sigma,d),fn=MonteCarlo,X=X,B=B, method = 'L-BFGS-B', 
+          lower = c(-10, 0, 0), upper = c(10, 10, 100),
+          control = list(fnscale = -1))
+    return(out)
+    
+}
+
+
 ##Error if A is not positive definite
 errorPD<-function(A)
 {
