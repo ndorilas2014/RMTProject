@@ -1,0 +1,117 @@
+---
+title: "RMT Project"
+author: "Naika Dorilas"
+date: "March 4, 2019"
+output: html_document
+---
+
+
+
+Given time series data and model $y'=Ay+\xi$, the goal is to find $\mu$, $\sigma$ and d of the matrix A
+which make this data the most probable.
+
+```{r echo=FALSE, results='hide', warning=FALSE}
+source("../Data/A&X_data.R")
+
+source("../R/myRfunctions.R") 
+
+```
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+
+
+```
+
+
+
+
+#Simulated Data
+
+We use the stochastic version of our model for species abundance of the $i^{th}$ species $\frac{y_i(t+\Delta t)-y_i(t)}{\Delta t}=\sum_{ij}A_{ij}y_i+\xi_i$ to find our species abundance at time j
+So we will use the following code to create an interaction matrix which is symmetric, A. First we create a function to create symmetric matrices A, of mean $\mu=-1$, variance $\sigma=0.5$ and diagonal elements, $d=-10$. 
+```{r results='hide'}
+S=20 #matrix size
+mu=-1 #mean
+sigma=0.5 #deviation
+d=10 #diagonal elements
+N=40 #number of data points per species
+
+A=makeASymmetric(mu=mu,sigma=sigma,d=-d, S=S)
+```
+Then we make sure A is negative definite and use the function "TS" to genereate Time Series data with our Matrix A and initial condition $y_0=15$ for each species. We create this time series data for 50 species, or $S=50$
+```{r}
+S=50 #matrix size
+mu=-1 #mean
+sigma=0.5 #deviation
+d=10 #diagonal elements
+N=50 #number of data points per species
+
+A=makeASymmetric(mu=mu,sigma=sigma,d=-d, S=S)
+
+if(errorND(A)==1)
+{
+  print("Error: The matrix is not diagonally stable")
+} else
+  
+{
+  ###Variables
+
+  N=500
+  dt=0.01 #time steps
+  y=matrix(0,nrow=S, ncol=N) #population
+  #yint=rnorm(mean=7, sd=3,n=10) #initial condition
+  yint=15
+  
+  
+
+  y<-createTS(A=A,dt=dt,y0=1,N=N,S=S,sigma=15)
+  
+}
+```
+This is just one method. Now we try a different method for generating time series data by assuming that the data comes directly from a multivariate distribution of mean, variance and diagonal elements equal to that which we us to create A.
+
+```{r}
+S=50 #matrix size
+mu=-1 #mean
+sigma=0.5 #deviation
+d=10 #diagonal elements
+N2=100 #number of data points per species
+
+A=makeASymmetric(mu=mu,sigma=sigma,d=-d, S=S)
+
+y2=matrix(0,nrow=S, ncol=N2) #population
+y2=makeX(mu=mu, S=S, N=N2, A=A)
+
+```
+
+```{r echo=FALSE}
+ matplot((c(1:N)),t(y),xlab="time(t)", ylab="change in abundance of species at time t", 
+          main="Population Abundances of S Species vs. Time(M1)",lty=1, col=rainbow(S), type="l") 
+
+```
+```{r echo=FALSE}
+ matplot((c(1:N2)),t(y2),xlab="time(t)", ylab="change in abundance of species at time t", 
+          main="Population Abundances of S Species vs. Time(M2)",lty=1, col=rainbow(S), type="l") 
+
+```
+
+#Maximum Likelihood
+
+##Monte Carlo Integral
+
+Given an SxN matrix of times series data X, our goal is to find the average probability, P(X|mu,sigma,d). 
+
+First we create a matrix of a possible range of $\mu\in(-2,2)$, $\sigma\in(0,1)$ and $d\in(5,10)$ and then we generate time series data X and interaction matrix A based on this data 
+
+```{r}
+muV=seq(-2,2,by=0.5)
+sigmaV=seq(0,1, by =0.2)
+dV=seq(5, 10, by=1)
+
+params=expand.grid(muV,sigmaV,dV)
+#params
+```
+
+

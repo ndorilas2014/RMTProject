@@ -1,0 +1,153 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+%\usepackage[scientific-notation=true]{siunitx}
+\usepackage{tabularx}
+\newcommand{\D}{\displaystyle}
+\begin{document}
+\section{Method 1}
+Suppose we take time series data points, N (indexed by a) from each of S species. 
+$$
+X_i^a\rightarrow X^1= 
+\begin{bmatrix}
+           x_{1}^1 \\
+           x_{2}^1 \\
+           \vdots \\
+           x_{S}^1
+ \end{bmatrix}
+ ,X^2=
+ \begin{bmatrix}
+           x_{1}^2 \\
+           x_{2}^2 \\
+           \vdots \\
+           x_{S}^2
+ \end{bmatrix} 
+ ....
+ ,X^N=
+ \begin{bmatrix}
+           x_{1}^N \\
+           x_{2}^N \\
+           \vdots \\
+           x_{S}^N
+ \end{bmatrix}
+$$
+
+Goal: Maximizing$ P(X|\mu,\sigma^2,d) $
+\hfill\break
+\hfill\break
+Assumptions:
+\hfill\break
+\hfill\break
+1). A is a symmetric S by S matrix \hfill\break
+2). $A_{ij}=\dfrac{\mu}{S}+B_{ij}$, where $B_{ij}~N(0,\dfrac{\sigma^2}{S}), i.e. A_{ij}~N(\dfrac{\mu}{S}, \dfrac{\sigma^2}{S})$
+3). $A_{ii}= -d+\dfrac{\mu}{S}$
+4). For A sufficiently large, the determinants of A for different random entries are similar so we use the average determinat of A in place of A. $<detA>=D(\mu,\sigma^2,d)$
+\hfill\break
+Since, $x_i$ are independent, the average probability of observing $x_i$ given $\mu,\sigma,d$:
+$$
+P(x|\mu, \sigma^2,d)=\int dA \prod(P(x^a|A)P(A|\mu,\sigma^2,d)
+$$
+we can pull the product out and distribute it to each term
+$$
+=\int (\prod_{i<j}(dA_{ij})\dfrac{(detA)^{N/2}}{(2\pi)^{NS/2}} exp(\dfrac{1}{2}\sum_{a=1}{N}\sum_{ij}^S x_i^a A_{ij} x_j^a) P(A|\mu,\sigma^2,d)
+$$
+Given our assumptions:
+$$
+=\dfrac{<detA>^{N/2}}{(2\pi)^{NS/2}} \int (\prod_{i<j}dB_{ij}) exp(\dfrac{1}{2}\sum_{a=1}^N(-d \sum(x_i^a)^2 +\dfrac{\mu}{S} \sum_{ij} x_i^a x_j^a + \sum_{i<j}x_i B_{ij} x_j)  P(B|\sigma^2))
+$$
+pulling out the terms seperate from $B_{ij} $
+$$
+=\dfrac{<detA>^{N/2}}{(2\pi)^{NS/2}}exp(\dfrac{-d}{2}\sum_{a=1}^N\sum_{i=1}^S(x_i^a)^2 + \dfrac{\mu}{2S}\sum_{a=1}^N(\sum_{i=1}^S x_i^a)^2 \times \int((\prod_{ij}dB_{ij})exp(\sum_{a=1}^N\sum_{i<j} x_i^a B_{ij}x_j^a)exp(- \sum_{i<j} \dfrac{B_{ij}^2}{2\sigma ^2/S}) 
+$$
+$$
+\times(\sqrt{\dfrac{S}{2\pi}}\dfrac{1}{\sigma}))
+$$
+The firt part of the integral becomes\hfill\break
+$$\prod_{i<j}dB_{ij}\rightarrow \prod_{i<j}exp(\dfrac{\sigma^2}{2S}(\sum_{a=1}^N x_i^a x_j^a)^2)=exp(\dfrac{\sigma^2}{4S} \sum_{ij}\sum_a x_i^a x_j^a \sum_b x_i^b x_j^b)$$\hfill\break
+Then we can condense the summations and obtain:
+$$ exp(\dfrac{\sigma^2}{4S}\sum_{ab}(\sum_i x_i^a x_i^b )^2)$$
+The portion in the exponent becomes\hfill\break
+
+$$\prod_{i<j} exp(-\dfrac{B_{ij}^2}{2\sigma^2/S}+\sum_{a=1}^N x_i^a B_{ij} x_j^a)\sqrt{\dfrac{S}{2\pi}}\dfrac{1}{\sigma}$$
+\hfill\break
+After rearranging the terms we get \hfill\break
+$$\prod_{i<j} dB_{ij} \sqrt{\dfrac{S}{2\pi}}\dfrac{1}{\sigma}exp(-\dfrac{B_{ij}^2}{2\sigma^2/S}+\sum_{a=1}^N x_i^a B_{ij} x_j^a)$$
+Let $y=B_{ij}, \tau=\dfrac{\sigma}{\sqrt{S}}, z=\sum_{a=1} x_i^a x_j^a$
+\hfill\break\hfill\break
+Then our integral becomes :
+$$
+\int dy \sqrt{\dfrac{1}{2\pi}}\dfrac{1}{\tau}exp(\dfrac{-y^2}{2\tau ^2}+yz)
+$$
+Which when solved, simplifies to:
+$$
+exp(\dfrac{\tau ^2 z^2}{2})
+$$
+Now let us denote $P(x|\mu,\sigma,d)$ as P:
+$$
+P=D\times exp(\dfrac{-d}{2}\sum_{a=1}^N\sum_{i=1}^S(x_i^a)^2 + \dfrac{\mu}{2S} \sum_{a=1}^N (\sum_{i=1}^S x_i^a)^2+\dfrac{\sigma^2}{4S}\sum_{ab}(\sum_i x_i^a x_i ^b)^2)
+$$
+$$
+\dfrac{2}{N}logP=logD-\dfrac{d}{N}\sum_{a=1}^N\sum_{i=1}^S(x_i^a)^2 - \dfrac{\mu}{SN} \sum_{a=1}^N (\sum_{i=1}^S x_i^a)^2+\dfrac{\sigma^2}{2SN}\sum_{ab}(\sum_i x_i^a x_i ^b)^2
+$$
+
+\subsection{Optimization}
+To optimize P we take the partial derivatives wrt $\mu, \sigma$, and d and set them all equal to 0
+
+1). $\dfrac{2}{N}\dfrac{\partial logP}{\partial d}=\dfrac{1}{D}\dfrac{\partial D}{\partial d}-\dfrac{1}{N}\sum_{a=1}^N\sum_{i=1}^S(x_i^a)^2 =0$
+\hfill\break\hfill\break
+2). $\dfrac{2}{N}\dfrac{\partial logP}{\partial \sigma^2}=\dfrac{1}{D}\dfrac{\partial D}{\partial \sigma^2}+\dfrac{1}{2SN}\sum_{ab}(\sum_i x_i^a x_i ^b)^2 =0$
+\hfill\break\hfill\break
+3). $\dfrac{2}{N}\dfrac{\partial logP}{\partial \mu}=\dfrac{1}{D}\dfrac{\partial D}{\partial \mu}-\dfrac{1}{SN} \sum_{a=1}^N (\sum_{i=1}^S x_i^a)^2 =0$
+\hfill\break\hfill\break
+\subsection{Determinant of A}
+The average determinant as given to us by the semicircular law in Random Matrix Theory-Robert Wiegner 
+$$
+<log D>=\sum_i log(\lambda_i)=log(d+\mu)+(S-1)\int d\lambda \dfrac{\sqrt{4\sigma^2-(\lambda+d)^2}}{2\pi\sigma}log(\lambda)
+$$
+We evaluate this integral from $-d-2\sigma : -d+2\sigma$ as that is the radius in which all of our eigenvalues lie according to the semicircular law. Let $z=\dfrac{\lambda -d}{2\sigma}, b=\dfrac{2d}{\sigma}$ so $\lambda \rightarrow 2\sigma z+d, d\lambda \rightarrow 2\sigma dz$. Now we divide everything by $2\sigma$ and the integral:
+$$
+\int_{-d/2\sigma -1}^{-d/2\sigma +1} d\lambda \dfrac{\sqrt{1-(\dfrac{\lambda -d}{2\sigma})^2}}{2\pi\sigma}log(\dfrac{\lambda}{2\sigma})+log(2\sigma)
+$$
+becomes:
+$$
+I=\dfrac{2\sigma}{\pi}[log(2\sigma)\int_{-b-1}^{-b+1}dz\sqrt{1-z^2}+\int_{-b-1}^{-b+1} dz log(z+b)\sqrt{1-z^2}]
+$$
+By using mathematica we solve the integral, where $F_{3,1}$ is the Hypergeometric function $HypegeometricPFQ[(1,1,\dfrac{3}{2}),(2,3),\dfrac{1}{b^2}]$:
+$$
+I=log(d)-\dfrac{\sigma^2}{2d^2}[F_{3,11}(\dfrac{4\sigma^2}{d^2})]
+$$
+Now we can rewrite the average log determinant as:
+$$
+\dfrac{1}{S}<logD>=\dfrac{1}{S}log(d+\mu)+(1-\dfrac{1}{S})I
+$$
+
+\subsection{Solving the Optimization Equations}
+Now that we have the $<logD>$ we can solve optimization equations 1)., 2). and 3). 
+\hfill\break
+So first let $g(x)=\dfrac{1}{2}xF_{3,1}(4x)$, Then $g'(x)=\dfrac{1}{1+\sqrt{1-4x}-2x}$
+\hfill\break
+\hfill\break
+\textbf{Optimization equation 3).} becomes
+$$
+\dfrac{2}{N}\dfrac{\partial logP}{\partial \mu}=\dfrac{1}{d+\mu}-\dfrac{1}{SN} \sum_{a=1}^N (\sum_{i=1}^S x_i^a)^2=0
+$$
+If we solve optimization equation 3). for $d+\mu$ we get $d+\mu=\dfrac{SN}{ \sum_{a=1}^N (\sum_{i=1}^S x_i^a)^2}$. We replace $d+\mu$ in optimization equation 1). with this.
+\hfill\break\hfill\break
+\textbf{Optimization equation 1).} becomes:
+$$
+\dfrac{2}{N}\dfrac{\partial logP}{\partial d}=\dfrac{1}{d}+\dfrac{2\sigma^2}{d^3}g'(\dfrac{\sigma^2}{d^2})-\dfrac{1}{SN}\sum_{a=1}^N\sum_{i=1}^S(x_i^a)^2 +\dfrac{1}{S^2N} \sum_{a=1}^N (\sum_{i=1}^S x_i^a)^2=0
+$$
+$$
+\rightarrow \dfrac{1}{d}+\dfrac{2\sigma^2}{d^3}g'(\dfrac{\sigma^2}{d^2})=\dfrac{1}{SN}\sum_{a=1}^N\sum_{i=1}^S(x_i^a)^2 - \dfrac{1}{S^2N} \sum_{a=1}^N (\sum_{i=1}^S x_i^a)^2
+$$
+\textbf{Optimization equation 2).} becomes:
+$$
+\dfrac{2}{N}\dfrac{\partial logP}{\partial \mu}=-\dfrac{1}{d^2}g'(\dfrac{\sigma^2}{d^2})+\dfrac{1}{2SN}\sum_{ab}(\sum_i x_i^a x_i ^b)^2 =0
+$$
+$$
+\rightarrow \dfrac{1}{S}\dfrac{1}{2SN}\sum_{ab}(\sum_i x_i^a x_i ^b)^2=\dfrac{1}{d^2}g'(\dfrac{\sigma^2}{d^2})
+$$
+
+\hfill\break\hfill\break
+To solve for $\mu, \sigma$ and d we use rootsolvers in R...
+\end{document}

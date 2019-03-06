@@ -1,0 +1,88 @@
+source("R/myRfunctions.R")
+
+# 
+# 
+#  # A=matrix(rnorm(25, mean=0, sd=1), 5, 5)
+#  # X=matrix(1,5,5)
+#  # sum(A%*%X)
+#  # X%*%A%*%t(X)
+# DetA(1,5,0.5,20)
+# y=c(0.3,7,0.5)
+# S=100
+# N=100
+# A=matrix(rnorm(S*S, mean=y[1], sd=y[3]), S, S)
+# ofx(y,S,N)
+# 
+# 
+# #cubintegrate(ofx(y,S=10,N=10),lower=c(-2,5,0), upper=c(2,10,1),fDim=3, method="hcubature")
+# 
+# 
+# 
+# 
+# muV=seq(-2,2,by=0.2)
+# sigmaV=seq(0,1, by =0.1)
+# dV=seq(5, 10, by=0.25)
+# 
+# m=length(muV)*length(sigmaV)*length(dV)
+# 
+# L=0
+# t=numeric(m)
+# params=expand.grid(muV,sigmaV,dV)
+# 
+# seq1=seq(1,m,by=1) #length of ld
+# ld=numeric(m) #empty vector to store logDeterminant
+# 
+# for (i in seq1)
+# {
+# 
+#   A=makeASymmetric(mu=params[i,1], sigma=params[i,2], d=params[i,3],S)
+#   X=makeX(mu=params[i,1], S=S, N=N,A=A)
+#   
+#   
+#   ld[i]=sqrt(DetA(params[i,1], params[i,2], params[i,3], S=S))
+#   #/((2*pi)^(S/2))*exp((1/2)*sum(X%*%A%*%X))
+# 
+# }
+# 
+# 
+# 
+# 
+
+
+# Now we need 3 functions. One to generate symmetric matrices A which is included in myRfunctions.R, one to create time seires data for which there are two options in myRfunctions.R, and one to calculate $P(X|A)=\dfrac{(detA)^{N/2}}{(2\pi)^{NS/2}} exp(-\dfrac{1}{2}\sum_{a=1}^{N}\sum_{ij}^S x_i^a A_{ij} x_j^a)$. We compute $\sum_{a=1}^{N}\sum_{ij}^S x_i^a A_{ij} x_j^a$ by finding $\sum_{i=j}X^TAX$ 
+#   
+#   ```{r eval=FALSE}
+# P_x<-function(X,A,N)
+# {
+#   ((sqrt(det(A)))^N)/((2*pi)^(N*S/2))*exp((-1/2)*sum(diag(t(X)%*%A%*%X)))
+# }
+
+#```
+
+S=50 #matrix size
+mu=-1 #mean
+sigma=0.5 #deviation
+d=10 #diagonal elements
+N=50 #number of data points per species
+
+A=makeASymmetric(mu=mu,sigma=sigma,d=-d, S=S)
+
+if(errorND(A)==1)
+{
+    print("Error: The matrix is not diagonally stable")
+} else
+    
+{
+    ###Variables
+    
+    N=500
+    dt=0.01 #time steps
+    y=matrix(0,nrow=S, ncol=N) #population
+    #yint=rnorm(mean=7, sd=3,n=10) #initial condition
+    yint=15
+    
+    
+    
+    y<-createTS(A=A,dt=dt,y0=1,N=N,S=S,sigma=15)
+    
+}

@@ -1,0 +1,11 @@
+Latex equations
+
+P((x_1,...,x_S)^a|A)=\dfrac{\sqrt{det(A)}^N}{(2\pi)^{NS/2}} \times e^{\dfrac{{\sum_{ij}x_iA_{ij}x_j}}{2}}
+
+
+
+
+\int \prod_{i<j}^N(dA_{ij})\dfrac{(det(A)^{N/2}}{(2\pi)^{NS/2}} exp(\dfrac{1}{2}\sum
+
+
+\dfrac{\partial D}{\partial \mu} \dfrac{1}{D}=-\dfrac{1}{SN}\sum_{a}(\sum_i x_i^a)^2
