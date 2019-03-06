@@ -237,7 +237,7 @@ DetA<-function(mu,d,sigma,S)
 ##
 makeX<-function(mu, S, N, A)
 {
-  
+  # browser()
   mulist=rep(mu, S)#Generating means for X
   
   X=t(rmvnorm(N, (mulist/S), inv(A), method="svd")) #Generates X/data from a mv distribution
@@ -295,7 +295,7 @@ makeASymmetric<-function(mu, sigma, d, S)
   diag(A)=d
 
 
-  return(A)
+  return(as.matrix(A))
 }
 
 P_x<-function(X,A,N)
