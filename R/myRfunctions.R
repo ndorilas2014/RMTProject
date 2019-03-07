@@ -260,22 +260,17 @@ makeA_BV<-function(mu, sigma, rhoB, d, S)
   A=matrix(rnorm(S), S, S)
   Sig=matrix(c(sigma^2, rhoB*sigma^2, rhoB*sigma^2, sigma^2), 2) #covariance matrix
   
+  # draw samples from bivariate normal
+  B = mvtnorm::rmvnorm((S * S - S) / 2, c(mu, mu), Sig)
+  
   #fill off diagonal entries of A with random samples from bivariate dis. of pairs(Mij, Mji)
-  for (i in (1:(S-1)))
-  {
-    for (j in (1+i):(S))
-    {
-      B=mvtnorm::rmvnorm(1, c(mu,mu), Sig) #bivariate distribution, 1 sample
-      A[i,j]=B[1]
-      A[j,i]=B[2]
-    }
-  }
+  A[upper.tri(A, diag = FALSE)] = B[, 1]
+  A = t(A)
+  A[upper.tri(A, diag = FALSE)] = B[, 2]
+  
   
   #fill diagonal entries of A with -d
-  for (i in 1:S)
-  {
-    A[i,i]=-d
-  }
+  diag(A) = d
   
   A=A/sqrt(S) #scale matrix by sqrt(S)
   
