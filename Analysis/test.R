@@ -1,4 +1,4 @@
-# source("../R/myRfunctions.R")
+source("R/myRfunctions.R")
 # 
 # # 
 # # 
@@ -133,8 +133,11 @@ NV=c(10,100)
 params=expand.grid(muV,sigmaV,dV,SV,NV)
 params=params[rep(1:nrow(params),5), ]
 
-p=lapply(1:nrow(params), function(i){
-    
+nCores = ifelse(grepl('Mac-Pro', Sys.info()['nodename']), 10, 1)
+
+p=parallel::mclapply(1:nrow(params), mc.cores = nCores, FUN = function(i){
+# p=lapply(1:nrow(params), function(i){
+#     browser()
     mu=params[i,1]
     sigma=params[i,2]
     d=params[i,3]
