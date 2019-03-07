@@ -265,7 +265,7 @@ makeA_BV<-function(mu, sigma, rhoB, d, S)
   {
     for (j in (1+i):(S))
     {
-      B=mvrnorm(1, c(mu,mu), Sig) #bivariate distribution, 1 sample
+      B=mvtnorm::rmvnorm(1, c(mu,mu), Sig) #bivariate distribution, 1 sample
       A[i,j]=B[1]
       A[j,i]=B[2]
     }
