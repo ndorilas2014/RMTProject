@@ -5,7 +5,7 @@ library(mvtnorm)
 library(rootSolve)
 library(cubature)
 library(Matrix)
-library(Brobdingnag)
+
 
 
 ##Functions
@@ -21,8 +21,10 @@ TS<-function(A, dt, y, xi, i,j)
   return(y)
 }
 
-createTS<-function(A,dt,y0,N,S,sigma)
+createTS<-function(A,dt,y0,N,sigma)
 {
+  S=nrow(A)
+  
   y=matrix(0,nrow=S, ncol=N) #population
   y[,1]=y0 #initial condition
   x1=rnorm(n=S, mean=0, sd=sigma)
@@ -242,7 +244,7 @@ makeX<-function(mu, sigma, d, S, N)
   mulist=rep(mu, S)#Generating means for X
   A=makeASymmetric(mu,sigma,d,S)
   
-  X=t(rmvnorm(N, (mulist/S), inv(A), method="svd")) #Generates X/data from a mv distribution
+  X=(t(rmvnorm(N, (mulist/S), inv(A), method="svd"))) #Generates X/data from a mv distribution
   #N=ncol(X) #for when X is given not created from mv distribution
   
   return(X)
@@ -334,6 +336,23 @@ MonteCarlo<-function(x,X, B)
     #browser()
     
     return(L)
+    
+}
+
+.mc2opt<-function(x,X,B){
+    mu=x[1]
+    sigma=x[2]
+    d=x[3]
+    
+    sumB=0
+    N=ncol(X)
+    S=nrow(X)
+    
+    if((sigma<=0 )|| sigma>=d/(sqrt(2)) || d<=0 || d+mu<=0){
+        return(-(10^10))
+    }else{
+        return(MonteCarlo(x,X,B))
+    }
     
 }
 
