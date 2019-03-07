@@ -1,8 +1,8 @@
-mu=1
-sigma=0.5
-d=10
-S=10
-N=10
+mu=2
+sigma=1.5
+d=15
+S=30
+N=100
 B=100
 
 X=makeX(mu,sigma,d,S,N)
