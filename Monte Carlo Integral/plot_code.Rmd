@@ -10,50 +10,34 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ```{r fig.width=4, fig.height=4}
 dat<-read.csv('../Data/monte_carlo_optimization/mcEstimates_symmetricA.csv')
-
+dat=dat[dat$convergence==0,]
+dat=dat[,-ncol(dat)]
 # plot(dat$mu[(dat$N==100) & (dat$S==100)], dat$mu_est[dat$N==100 & dat$S==100])
 # abline(0,1,col='red')
 # 
 # plot(dat$d[dat$N==100 & dat$S==100]-dat$d_est[dat$N==100 & dat$S==100], 
 #      dat$sigma[dat$N==100 & dat$S==100]-dat$sigma_est[dat$N==100 & dat$S==100])
-L=matrix(c(10,10,100,100,10,100,10,100),4,2)
 for (i in 1:3)
 {
-    plot(dat[,i][dat$N==10 & dat$S==10],dat[,i+5][dat$N==10 & dat$S==10],
-         xlab=colnames(dat)[i],ylab=colnames(dat)[i+5],
-         main="N=10, S=10") 
-    plot(dat[,i][dat$N==10 & dat$S==100],dat[,i+5][dat$N==10&dat$S==100],
-         xlab=colnames(dat)[i],ylab=colnames(dat)[i+5],
-         main="N=10, S=100") 
-    plot(dat[,i][dat$N==100&dat$S==100],dat[,i+5][dat$N==100&dat$S==100],
-         xlab=colnames(dat)[i],ylab=colnames(dat)[i+5],
-         main="N=100, S=100") 
-    plot(dat[,i][dat$N==100&dat$S==10],dat[,i+5][dat$N==100&dat$S==10],
-         xlab=colnames(dat)[i],ylab=colnames(dat)[i+5],
-         main="N=100, S=10") 
-    
-    q=((i+1)%%3)+1
-    
-    plot(dat[,i][dat$N==10 & dat$S==10]-dat[,i+5][dat$N==10 & dat$S==10], 
-      dat[,((i+1)%%3)+1][dat$N==10 & dat$S==10]-dat[,((i+1)%%3)+6][dat$N==10 &dat$S==10],
-      main= bquote("difference in" ~ .(colnames(dat)[i])~"vs "~  .(colnames(dat)[q])~"N=10,S=10"),
-      xlab=colnames(dat)[i],ylab=colnames(dat)[q])
-
-     plot(dat[,i][dat$N==10 & dat$S==100]-dat[,i+5][dat$N==10 & dat$S==100], 
-      dat[,((i+1)%%3)+1][dat$N==10 & dat$S==100]-dat[,((i+1)%%3)+6][dat$N==10 &dat$S==100],
-      main= bquote("difference in" ~ .(colnames(dat)[i])~"vs "~  .(colnames(dat)[q])~"N=10,S=100"),
-      xlab=colnames(dat)[i],ylab=colnames(dat)[q])
-
-     plot(dat[,i][dat$N==100 & dat$S==100]-dat[,i+5][dat$N==100 & dat$S==100], 
-      dat[,((i+1)%%3)+1][dat$N==100 & dat$S==100]-dat[,((i+1)%%3)+6][dat$N==100 &dat$S==100],
-      main= bquote("difference in" ~ .(colnames(dat)[i])~"vs "~  .(colnames(dat)[q])~"N=100,S=100"),
-      xlab=colnames(dat)[i],ylab=colnames(dat)[q])
-
-     plot(dat[,i][dat$N==100 & dat$S==10]-dat[,i+5][dat$N==100 & dat$S==10], 
-      dat[,((i+1)%%3)+1][dat$N==100 & dat$S==10]-dat[,((i+1)%%3)+6][dat$N==100 &dat$S==10],
-      main= bquote("difference in" ~ .(colnames(dat)[i])~"vs "~  .(colnames(dat)[q])~"N=100,S=10"),
-      xlab=colnames(dat)[i],ylab=colnames(dat)[q])
+    for(s in c(10,100)){
+        for(n in c(10,100)){
+            plot(dat[,i][dat$N==n & dat$S==s],dat[,i+5][dat$N==n & dat$S==s],
+                 xlab=colnames(dat)[i],ylab=colnames(dat)[i+5],
+                 main=bquote("N="~.(n)*" , S="~.(s)))
+            
+            q=((i+1)%%3)+1
+            
+            plot(x=(dat[,i][dat$N==n & dat$S==s]-
+                        dat[,i+5][dat$N==n & dat$S==s]), 
+                 y=(dat[,((i+1)%%3)+1][dat$N==n & dat$S==s]-
+                        dat[,((i+1)%%3)+6][dat$N==n &dat$S==s]),
+                 main= bquote("difference in" ~ .(colnames(dat)[i])~"vs "~
+                                  .(colnames(dat)[q])~"N="~.(n)*",S= "~.(s)),
+                 xlab=colnames(dat)[i],ylab=colnames(dat)[q])
+            
+            
+        }
+    }
     
 }
-
 ```
