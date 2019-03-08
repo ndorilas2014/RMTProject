@@ -142,6 +142,10 @@ optim(par=c(mu,sigma,d),fn=.mc2opt,X=X,B=B, method = 'L-BFGS-B',
 
 
 ```
+
+```{r}
+dat<-read.csv('../Data/monte_carlo_optimization/mcEstimates_symmetricA.csv')
+```
 First we create a matrix of a possible range of $\mu\in(-2,2)$, $\sigma\in(0,1)$ and $d\in(5,10)$ and then we generate time series data X and interaction matrix A based on this data 
 
 ```{r}

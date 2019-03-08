@@ -134,6 +134,8 @@ params=params[rep(1:nrow(params),5), ]
 nCores = ifelse(grepl('Mac-Pro', Sys.info()['nodename']), 10, 1)
 
 p=parallel::mclapply(1:nrow(params), mc.cores = nCores, FUN = function(i){
+# p=lapply(1:nrow(params), function(i){
+#     browser()
     print(i)
     mu=params[i,1]
     sigma=params[i,2]
@@ -146,12 +148,14 @@ p=parallel::mclapply(1:nrow(params), mc.cores = nCores, FUN = function(i){
     out<-optim(par=c(mu,sigma,d),fn=.mc2opt,X=X,B=B, method = 'L-BFGS-B', 
                 lower = c(-10, 0, 0), upper = c(10, 10, 100),
                 control = list(fnscale = -1))
-    return(c(out$par, out$convergence))
+    return(out$par)
 })
 
 p=do.call(rbind,p)
-colnames(p) = c('mu_est', 'sigma_est', 'd_est', 'convergence')
+colnames(p) = c('mu_est', 'sigma_est', 'd_est')
 
 out = cbind(params, p)
 
 write.csv(out, 'Data/monte_carlo_optimization/mcEstimates_symmetricA.csv', row.names = FALSE)
+
+dat<-read.csv('../Data/monte_carlo_optimization/mcEstimates_symmetricA.csv')
