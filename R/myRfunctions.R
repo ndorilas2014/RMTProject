@@ -75,6 +75,48 @@ P_xC<-function(Xi,A)
     return(out)
 }
 
+MonteCarlo2<-function(x,X, B)
+{
+    mu=x[1]
+    sigma=x[2]
+    d=x[3]
+    rho=x[4]
+    
+    sumB=0
+    N=ncol(X)
+    S=nrow(X)
+    
+    
+    L=lapply(1:B, function(i){
+        A=makeA_BV(mu, sigma, rho, d, S=S)
+        return(P_xC(X, A))
+    })
+    L=mean(unlist(L),na.rm=TRUE)
+    #browser()
+    
+    return(L)
+    
+}
+
+.mc4opt<-function(x,X,B){
+    mu=x[1]
+    sigma=x[2]
+    d=x[3]
+    rho=x[4]
+    
+    sumB=0
+    N=ncol(X)
+    S=nrow(X)
+    
+
+    if((sigma<=0 )||  d<=0 || d+mu<=0 || d<= sqrt(1+rho)*sigma){
+        return(-(10^10))
+    }else{
+        return(MonteCarlo(x,X,B))
+    }
+    
+}
+
 
 
 ########################################################################################
