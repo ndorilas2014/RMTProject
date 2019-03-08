@@ -130,41 +130,34 @@ dV=seq(5, 10, length.out=5)
 SV=c(10,100)
 NV=c(10,100)
 
-# params=expand.grid(mu = muV, sigma = sigmaV,d = dV,S = SV, N = NV)
-# params=params[rep(1:nrow(params),5), ]
-# 
-# nCores = ifelse(grepl('Mac-Pro', Sys.info()['nodename']), 10, 1)
-# 
-# p=parallel::mclapply(1:nrow(params), mc.cores = nCores, FUN = function(i){
-# # p=lapply(1:nrow(params), function(i){
-# #     browser()
-#     print(i)
-#     mu=params[i,1]
-#     sigma=params[i,2]
-#     d=params[i,3]
-#     S=params[i,4]
-#     N=params[i,5]
-#     B=100
-#     
-#     X=makeX(mu,sigma,d,S,N)
-#     out<-optim(par=c(mu,sigma,d),fn=.mc2opt,X=X,B=B, method = 'L-BFGS-B', 
-#                 lower = c(-10, 0, 0), upper = c(10, 10, 100),
-#                 control = list(fnscale = -1))
-#     return(out$par)
-# })
-# 
-# p=do.call(rbind,p)
-# colnames(p) = c('mu_est', 'sigma_est', 'd_est')
-# 
-# out = cbind(params, p)
-# 
-# write.csv(out, 'Data/monte_carlo_optimization/mcEstimates_symmetricA.csv', row.names = FALSE)
+params=expand.grid(mu = muV, sigma = sigmaV,d = dV,S = SV, N = NV)
+params=params[rep(1:nrow(params),5), ]
+
+nCores = ifelse(grepl('Mac-Pro', Sys.info()['nodename']), 10, 1)
+
+p=parallel::mclapply(1:nrow(params), mc.cores = nCores, FUN = function(i){
+# p=lapply(1:nrow(params), function(i){
+#     browser()
+    print(i)
+    mu=params[i,1]
+    sigma=params[i,2]
+    d=params[i,3]
+    S=params[i,4]
+    N=params[i,5]
+    B=100
+    
+    X=makeX(mu,sigma,d,S,N)
+    out<-optim(par=c(mu,sigma,d),fn=.mc2opt,X=X,B=B, method = 'L-BFGS-B', 
+                lower = c(-10, 0, 0), upper = c(10, 10, 100),
+                control = list(fnscale = -1))
+    return(out$par)
+})
+
+p=do.call(rbind,p)
+colnames(p) = c('mu_est', 'sigma_est', 'd_est')
+
+out = cbind(params, p)
+
+write.csv(out, 'Data/monte_carlo_optimization/mcEstimates_symmetricA.csv', row.names = FALSE)
 
 dat<-read.csv('../Data/monte_carlo_optimization/mcEstimates_symmetricA.csv')
-
-plot(dat$mu[(dat$N==100) & (dat$S==100)], dat$mu_est[dat$N==100 & dat$S==100])
-abline(0,1,col='red')
-
-plot(dat$d[dat$N==100 & dat$S==100]-dat$d_est[dat$N==100 & dat$S==100], 
-     dat$sigma[dat$N==100 & dat$S==100]-dat$sigma_est[dat$N==100 & dat$S==100])
-
