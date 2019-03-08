@@ -1,6 +1,9 @@
 #' @title Species Abundance Time Series
 #' 
-#' @description createTS creates time series data either through independent draws from a multivariate normal distribution with a symmetric interaction matrix A, using a model for species abundance(see details) with a symmetric interaction matrix A and using the same model but with a nonsymmetric A 
+#' @description createTS creates time series data either through independent draws from a 
+#' multivariate normal distribution with a symmetric interaction matrix A, using a model 
+#' for species abundance(see details) with a symmetric interaction matrix A and using 
+#' the same model but with a nonsymmetric A 
 #' 
 #' @param mu the mean of the elements in the interaction matrix A
 #' @param sigma the deviatin of the elements in the interaction matrix A
@@ -12,24 +15,33 @@
 #' @param t_err the deviation in the noise in the time series model(assuming noise~N(0,t_err))
 #' @param opt has several options, see details below 
 #' 
-#' @details
+#' @details The opt function has three possible values: 
+#' 1.'symmetricA_mvnorm' which allows for the creation of time series data for a symmetric 
+#' interaction matrix and species data created from a multivariate normal distribution. 
+#' 
+#' 2. 'symmetricA_TS' which allows for the creation of time series data with a 
+#' symmetric interaction  matrix and species abundance data from the model 
+#' (1) y_i(t+dt)=y_i(t)+dt(sum_i,j(sum_t(x_i A x_J))). 
+#' 
+#' 3. 'bivariateA_TS' which uses a non symmetric interactioni matrix drawn from a bivariate 
+#' distribution, and the time series model (1) to create the time series data.
 #'  
 #' @return A matrix where rows are species and columns are the time points
-#' @export
+#' @export 
 
 
 
-createTS<-function(mu,sigma,d,rho=NULL,dt=NULL,y0=NULL,ndata,t_err=NULL,opt=c('symmetricA_mvnormal','symmetricA_TS', 'bivariateA_TS')){
+createTS<-function(mu,sigma,d,sizeA,rho=NULL,dt=NULL,y0=NULL,ndata,t_err=NULL,opt=c('symmetricA_mvnormal','symmetricA_TS', 'bivariateA_TS')){
     opt=match.arg(opt,c('symmetricA_mvnormal','symmetricA_TS', 'bivariateA_TS'))
     if(opt=='symmetricA_mvnormal')
     {
-        return(.xtseriesmvnormal(mu,sigma,d,S,N))
+        return(.xtseriesmvnormal(mu,sigma,d,S=sizeA,N=ndata))
     }else if(opt=='symmetricA_TS'){
         A=makeASymmetric(mu,sigma,d,S)
-        return(.xtseries(A,dt,y0,N,t_err))
+        return(.xtseries(A,dt,y0,N=ndata,t_err))
     }else{
         A=makeA_BV(mu,sigma,rho,d,S)
-        return(.xtseries(A,dt,y0,N,t_err))
+        return(.xtseries(A,dt,y0,N=ndata,t_err))
     }
 }
 
