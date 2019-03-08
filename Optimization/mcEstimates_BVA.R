@@ -160,4 +160,4 @@ out = cbind(params, p)
 
 write.csv(out, 'Data/monte_carlo_optimization/mcEstimates_BVA.csv', row.names = FALSE)
 
-dat<-read.csv('../Data/monte_carlo_optimization/mcEstimates_BVA.csv')
+# dat<-read.csv('../Data/monte_carlo_optimization/mcEstimates_BVA.csv')
