@@ -1,7 +1,5 @@
 source("R/myRfunctions.R")
 # 
-# # 
-# # 
 # #  # A=matrix(rnorm(25, mean=0, sd=1), 5, 5)
 # #  # X=matrix(1,5,5)
 # #  # sum(A%*%X)
