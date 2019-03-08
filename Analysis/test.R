@@ -148,11 +148,11 @@ p=parallel::mclapply(1:nrow(params), mc.cores = nCores, FUN = function(i){
     out<-optim(par=c(mu,sigma,d),fn=.mc2opt,X=X,B=B, method = 'L-BFGS-B', 
                 lower = c(-10, 0, 0), upper = c(10, 10, 100),
                 control = list(fnscale = -1))
-    return(out$par)
+    return(c(out$par, out$convergence))
 })
 
 p=do.call(rbind,p)
-colnames(p) = c('mu_est', 'sigma_est', 'd_est')
+colnames(p) = c('mu_est', 'sigma_est', 'd_est', 'convergence')
 
 out = cbind(params, p)
 
