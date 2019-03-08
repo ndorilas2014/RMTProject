@@ -41,7 +41,39 @@ createTS<-function(A,dt,y0,N,sigma)
   
 }
 
+f_xC<-function(A,dt,y0,N,sigma)
 
+{
+    S=nrow(A)
+    
+    y=matrix(0,nrow=S, ncol=N) #population
+    y[,1]=y0 #initial condition
+    x1=rnorm(n=S, mean=0, sd=sigma)
+    x2=matrix(rnorm(n=N*S, mean=0, sd=S),S,N)
+    xi=matrix(0,S,N)
+    
+    
+    
+    for(i in 1:(N-1))
+    {
+        
+        y[,i+1]=y[,i]+dt*(A%*%y[,i]+x2[,i+1])
+        xi[,i+1]=(y[,i+1]-y[,i])/dt-A%*%y[,i]
+        
+    }
+    
+    xi[,1]=x2[,1]
+    return(xi)
+}
+
+P_xC<-function(Xi,A)
+{
+    N=ncol(Xi)
+    S=nrow(A)
+    
+    out=-(N*S/2)*(log(2*pi)+2*log(S))-sum(Xi/(2*S^2))
+    return(out)
+}
 
 
 
