@@ -128,34 +128,49 @@ dV=seq(5, 10, length.out=5)
 SV=c(10,100)
 NV=c(10,100)
 
+T1=seq(-5,5,by=1)
+T3=seq(-10,10, by=1)
+T2=seq(0,10,by=1)
+
+
 params=expand.grid(mu = muV, sigma = sigmaV,d = dV,S = SV, N = NV)
+par2=expand.grid(T1,T2,T3)
 params=params[rep(1:nrow(params),5), ]
 
 nCores = ifelse(grepl('Mac-Pro', Sys.info()['nodename']), 10, 1)
 
-p=parallel::mclapply(1:nrow(params), mc.cores = nCores, FUN = function(i){
+#p=parallel::mclapply(1:nrow(params), mc.cores = nCores, FUN = function(i){
+p=parallel::mclapply(1:nrow(par2), mc.cores = nCores, FUN = function(i){
+        
 # p=lapply(1:nrow(params), function(i){
 #     browser()
     print(i)
-    mu=params[i,1]
-    sigma=params[i,2]
-    d=params[i,3]
-    S=params[i,4]
-    N=params[i,5]
+    mu=params[1,1]
+    sigma=params[1,2]
+    d=params[1,3]
+    S=params[1,4]
+    N=params[1,5]
     B=100
     
     X=makeX(mu,sigma,d,S,N)
-    out<-optim(par=c(mu,sigma,d),fn=.mc2opt,X=X,B=B, method = 'L-BFGS-B', 
+#    out<-optim(par=c(mu,sigma,d),fn=.mc2opt,X=X,B=B, method = 'L-BFGS-B', 
+    out<-optim(par=par2[i,],fn=.mc2opt,X=X,B=B, method = 'SANN', 
                 lower = c(-10, 0, 0), upper = c(10, 10, 100),
                 control = list(fnscale = -1))
-    return(c(out$par, out$convergence))
+    return(c(out$par, out$convergence, out$value))
 })
 
+
 p=do.call(rbind,p)
-colnames(p) = c('mu_est', 'sigma_est', 'd_est', 'convergence')
+colnames(p) = c('mu_est', 'sigma_est', 'd_est', 'convergence', 'value')
 
-out = cbind(params, p)
+#out = cbind(params, p)
+colnames(par2)=c('mu_guess','sigma_guess','d_guess')
+out=cbind(par2, p)
 
-write.csv(out, 'Data/monte_carlo_optimization/mcEstimates_symmetricA.csv', row.names = FALSE)
-
-dat<-read.csv('../Data/monte_carlo_optimization/mcEstimates_symmetricA.csv')
+plot(x=out[,1],y=out[,4],xlab="Initial Guesses for mu", ylab="Estimated Value of Mu")
+write.csv(out, 'inst/Data/monte_carlo_optimization/mcEstimates_symmetricA_test_(-2,0.1,5)_SANN.csv', row.names = FALSE)
+# 
+# write.csv(out, 'Data/monte_carlo_optimization/mcEstimates_symmetricA.csv', row.names = FALSE)
+# 
+# dat<-read.csv('../Data/monte_carlo_optimization/mcEstimates_symmetricA.csv')
