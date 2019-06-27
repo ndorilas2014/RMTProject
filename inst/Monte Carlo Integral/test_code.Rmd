@@ -11,9 +11,9 @@ Given time series data and model $y'=Ay+\xi$, the goal is to find $\mu$, $\sigma
 which make this data the most probable.
 
 ```{r echo=FALSE, results='hide', warning=FALSE}
-source("../Data/A&X_data.R")
+#source("../Data/A&X_data.R")
 
-source("../R/myRfunctions.R") 
+source("../../R/myRfunctions.R") 
 
 ```
 ```{r setup, include=FALSE}
